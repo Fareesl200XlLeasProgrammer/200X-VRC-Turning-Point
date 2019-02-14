@@ -81,11 +81,13 @@ void opcontrol() {
     }
 
     if(master.get_digital(DIGITAL_A)){
-			Flywheel.move_velocity(140);
+			Flywheel.move_velocity(127);
+			master.rumble("-");
     }
 
 		else if(master.get_digital(DIGITAL_B)){
-			Flywheel.move_velocity(120);
+			Flywheel.move_velocity(115);
+			master.rumble("...");
 		}
 
 
