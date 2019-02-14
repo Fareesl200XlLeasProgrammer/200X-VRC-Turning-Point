@@ -12,47 +12,87 @@
  * from where it left off.
  */
 
- //Motor Definitions
- // pros::Controller master2(pros::E_CONTROLLER_MASTER);
- //
- // pros::Motor Right2(1, false);
- //
- // pros::Motor Right22(2, false);
- //
- // pros::Motor Left2(3);
- //
- // pros::Motor Left22(4);
- //
- // pros::Motor Flipper2(20);
- //
- // pros::Motor Intake2(7, false);
- //
- // pros::Motor Lift2(8);
- //
- // pros::Motor Flywheel2(10);
- //
- // pros::Motor Index2(17);
-
 void autonomous() {
   //Motor Definitions
-  // pros::Controller master(pros::E_CONTROLLER_MASTER);
-  //
-  // pros::Motor Right(1, false);
-  //
-  // pros::Motor Right2(2, false);
-  //
-  // pros::Motor Left(3);
-  //
-  // pros::Motor Left2(4);
-  //
-  // pros::Motor Flipper(20);
-  //
-  // pros::Motor Intake(7, false);
-  //
-  // pros::Motor Lift(8);
-  //
-  // pros::Motor Flywheel(10);
-  //
-  // pros::Motor Index(17);
+	pros::Controller master(pros::E_CONTROLLER_MASTER);
+
+	pros::Motor Right(1, false);
+
+	pros::Motor Right2(2, false);
+
+	pros::Motor Left(3);
+
+	pros::Motor Left2(4);
+
+	pros::Motor Flipper(20);
+
+	pros::Motor Intake(7, false);
+
+	pros::Motor Lift(8);
+
+	pros::Motor Flywheel(10);
+
+	pros::Motor Index(17);
+
+  Right.tare_position();
+  Right2.tare_position();
+  Left.tare_position();
+  Left2.tare_position();
+
+  Right.set_brake_mode(MOTOR_BRAKE_HOLD);
+  Right2.set_brake_mode(MOTOR_BRAKE_HOLD);
+  Left.set_brake_mode(MOTOR_BRAKE_HOLD);
+  Left2.set_brake_mode(MOTOR_BRAKE_HOLD);
+
+  while(Left.get_position() < 2800){
+    Right.move_velocity(-100);
+    Right2.move_velocity(-100);
+    Left2.move_velocity(100);
+    Left.move_velocity(100);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+  Intake.move_relative(-2000, 200);
+  pros::delay(1000);
+
+  while(Left.get_position() > 500){
+    Right.move_velocity(200);
+    Right2.move_velocity(200);
+    Left2.move_velocity(-200);
+    Left.move_velocity(-200);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+  pros::delay(500);
+
+  while(Left.get_position() < 550){
+    Right.move_velocity(-100);
+    Right2.move_velocity(-100);
+    Left2.move_velocity(100);
+    Left.move_velocity(100);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+  while(Left.get_position() > -300){
+    Right.move_velocity(-50);
+    Right2.move_velocity(-50);
+    Left2.move_velocity(-50);
+    Left.move_velocity(-50);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+
 
 }
