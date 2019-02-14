@@ -1,5 +1,7 @@
 #include "main.h"
-#include "Gui.cpp"
+// #include "Gui.cpp"
+
+
 
 void opcontrol() {
 	//Motor Definitions
@@ -23,7 +25,7 @@ void opcontrol() {
 
 	pros::Motor Index(17);
 
-	Gui();//Run the gui
+	// Gui();//Run the gui
 
 	//Setting Brake Modes
 	Lift.set_brake_mode(MOTOR_BRAKE_HOLD);
@@ -32,7 +34,7 @@ void opcontrol() {
 	Flipper.set_encoder_units(MOTOR_ENCODER_ROTATIONS);
 
 	while (true) {
-		Flywheel.move_velocity(135);//test 120
+		Flywheel.move_velocity(135);
 
     //Drive Code
     Right.move(master.get_analog(ANALOG_RIGHT_X)*0.5 - master.get_analog(ANALOG_LEFT_Y));
@@ -40,7 +42,7 @@ void opcontrol() {
     Left.move(master.get_analog(ANALOG_RIGHT_X)*0.5 + master.get_analog(ANALOG_LEFT_Y));
     Left2.move(master.get_analog(ANALOG_RIGHT_X)*0.5 + master.get_analog(ANALOG_LEFT_Y));
 
-		if(master.get_analog(ANALOG_LEFT_Y) < 5 && master.get_analog(ANALOG_LEFT_Y) >-5){
+		if(master.get_analog(ANALOG_LEFT_Y) < 15 && master.get_analog(ANALOG_LEFT_Y) >-15){
 			Right.set_brake_mode(MOTOR_BRAKE_HOLD);
 			Right2.set_brake_mode(MOTOR_BRAKE_HOLD);
 			Left.set_brake_mode(MOTOR_BRAKE_HOLD);
@@ -67,9 +69,10 @@ void opcontrol() {
       Intake.move_velocity(-200);
       Index.move_velocity(200);
     }
-		else if(master.get_digital(DIGITAL_L1) && master.get_digital(DIGITAL_L2)){
+
+		else if(master.get_digital(DIGITAL_UP)){
 			Intake.move_velocity(200);
-      Index.move_velocity(200);
+      Index.move_velocity(-200);
 		}
 
     else{
@@ -81,9 +84,10 @@ void opcontrol() {
 			Flywheel.move_velocity(140);
     }
 
-		if(master.get_digital(DIGITAL_B)){
+		else if(master.get_digital(DIGITAL_B)){
 			Flywheel.move_velocity(120);
 		}
+
 
 		pros::delay(20);
 	}
