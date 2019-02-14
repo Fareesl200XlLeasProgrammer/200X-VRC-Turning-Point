@@ -47,7 +47,6 @@ void opcontrol() {
 			Left2.set_brake_mode(MOTOR_BRAKE_HOLD);
 		}
 
-
     //Lift Code
     if(master.get_digital(DIGITAL_R1)){
       Lift.move_velocity(200);
