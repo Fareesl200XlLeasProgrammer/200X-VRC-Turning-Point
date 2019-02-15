@@ -102,7 +102,7 @@ void autonomous() {
 
 	pros::delay(200);
 
-	while(Left.get_position() < 3600){
+	while(Left.get_position() < 4500){
     Right.move_velocity(-150);
     Right2.move_velocity(-150);
     Left2.move_velocity(150);
