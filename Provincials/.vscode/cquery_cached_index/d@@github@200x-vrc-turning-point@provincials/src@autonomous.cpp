@@ -44,11 +44,13 @@ void autonomous() {
   Left.set_brake_mode(MOTOR_BRAKE_HOLD);
   Left2.set_brake_mode(MOTOR_BRAKE_HOLD);
 
-  while(Left.get_position() < 2800){
-    Right.move_velocity(-100);
-    Right2.move_velocity(-100);
-    Left2.move_velocity(100);
-    Left.move_velocity(100);
+	Flywheel.move_velocity(135);
+
+  while(Left.get_position() < 3300){
+    Right.move_velocity(-150);
+    Right2.move_velocity(-150);
+    Left2.move_velocity(150);
+    Left.move_velocity(150);
   }
   Right.move_velocity(0);
   Right2.move_velocity(0);
@@ -58,11 +60,11 @@ void autonomous() {
   Intake.move_relative(-2000, 200);
   pros::delay(1000);
 
-  while(Left.get_position() > 500){
-    Right.move_velocity(200);
-    Right2.move_velocity(200);
-    Left2.move_velocity(-200);
-    Left.move_velocity(-200);
+  while(Left.get_position() > 50){
+    Right.move_velocity(100);
+    Right2.move_velocity(100);
+    Left2.move_velocity(-100);
+    Left.move_velocity(-100);
   }
   Right.move_velocity(0);
   Right2.move_velocity(0);
@@ -71,7 +73,19 @@ void autonomous() {
 
   pros::delay(500);
 
-  while(Left.get_position() < 550){
+
+  while(Left.get_position() > -610){
+    Right.move_velocity(-20);
+    Right2.move_velocity(-20);
+    Left2.move_velocity(-20);
+    Left.move_velocity(-20);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+	while(Left.get_position() < 3300){
     Right.move_velocity(-100);
     Right2.move_velocity(-100);
     Left2.move_velocity(100);
@@ -82,16 +96,30 @@ void autonomous() {
   Left2.move_velocity(0);
   Left.move_velocity(0);
 
-  while(Left.get_position() > -300){
-    Right.move_velocity(-50);
-    Right2.move_velocity(-50);
-    Left2.move_velocity(-50);
-    Left.move_velocity(-50);
+	pros::delay(500);
+
+	Index.move_relative(1500, 200);
+
+	pros::delay(200);
+
+	while(Left.get_position() < 3600){
+    Right.move_velocity(-150);
+    Right2.move_velocity(-150);
+    Left2.move_velocity(150);
+    Left.move_velocity(150);
   }
   Right.move_velocity(0);
   Right2.move_velocity(0);
   Left2.move_velocity(0);
   Left.move_velocity(0);
+
+	pros::delay(200);
+
+	Intake.move_relative(-3000, 200);
+	Index.move_relative(3000, 200);
+
+
+
 
 
 
