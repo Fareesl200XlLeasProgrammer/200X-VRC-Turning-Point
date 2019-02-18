@@ -1,7 +1,4 @@
 #include "main.h"
-// #include "Gui.cpp"
-
-
 
 void opcontrol() {
 	//Motor Definitions
@@ -37,10 +34,10 @@ void opcontrol() {
 		Flywheel.move_velocity(135);
 
     //Drive Code
-    Right.move(master.get_analog(ANALOG_RIGHT_X)*0.5 - master.get_analog(ANALOG_LEFT_Y));
-    Right2.move(master.get_analog(ANALOG_RIGHT_X)*0.5 - master.get_analog(ANALOG_LEFT_Y));
-    Left.move(master.get_analog(ANALOG_RIGHT_X)*0.5 + master.get_analog(ANALOG_LEFT_Y));
-    Left2.move(master.get_analog(ANALOG_RIGHT_X)*0.5 + master.get_analog(ANALOG_LEFT_Y));
+    Right.move(master.get_analog(ANALOG_RIGHT_X)*0.8 - master.get_analog(ANALOG_LEFT_Y));
+    Right2.move(master.get_analog(ANALOG_RIGHT_X)*0.8 - master.get_analog(ANALOG_LEFT_Y));
+    Left.move(master.get_analog(ANALOG_RIGHT_X)*0.8 + master.get_analog(ANALOG_LEFT_Y));
+    Left2.move(master.get_analog(ANALOG_RIGHT_X)*0.8 + master.get_analog(ANALOG_LEFT_Y));
 
 		if(master.get_analog(ANALOG_LEFT_Y) < 15 && master.get_analog(ANALOG_LEFT_Y) >-15){
 			Right.set_brake_mode(MOTOR_BRAKE_HOLD);
@@ -51,11 +48,11 @@ void opcontrol() {
 
     //Lift Code
     if(master.get_digital(DIGITAL_R1)){
-      Lift.move_velocity(200);
+      Lift.move_velocity(160);
     }
 
     else if(master.get_digital(DIGITAL_R2)){
-      Lift.move_velocity(-200);
+      Lift.move_velocity(-160);
     }
 
     else{
@@ -67,12 +64,12 @@ void opcontrol() {
     }
     else if(master.get_digital(DIGITAL_L2)){
       Intake.move_velocity(-200);
-      Index.move_velocity(200);
+      Index.move_velocity(167);
     }
 
 		else if(master.get_digital(DIGITAL_UP)){
 			Intake.move_velocity(200);
-      Index.move_velocity(-200);
+      Index.move_velocity(-167);
 		}
 
     else{
