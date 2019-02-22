@@ -44,11 +44,6 @@ void opcontrol() {
 			Right2.set_brake_mode(MOTOR_BRAKE_HOLD);
 			Left.set_brake_mode(MOTOR_BRAKE_HOLD);
 			Left2.set_brake_mode(MOTOR_BRAKE_HOLD);
-
-			Right.move_velocity(0);
-			Right2.move_velocity(0);
-			Left2.move_velocity(0);
-			Left.move_velocity(0);
 		}
 
     //Lift Code
@@ -69,12 +64,12 @@ void opcontrol() {
     }
     else if(master.get_digital(DIGITAL_L2)){
       Intake.move_velocity(-200);
-      Index.move_velocity(167);
+      Index.move_velocity(150);
     }
 
 		else if(master.get_digital(DIGITAL_UP)){
 			Intake.move_velocity(200);
-      Index.move_velocity(-167);
+      Index.move_velocity(-150);
 		}
 
     else{
