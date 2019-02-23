@@ -12,6 +12,8 @@
  * from where it left off.
  */
 
+ 
+
 void autonomous() {
   //Motor Definitions
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
@@ -45,6 +47,7 @@ void autonomous() {
   Left2.set_brake_mode(MOTOR_BRAKE_HOLD);
 
 	Flywheel.move_velocity(135);
+	Intake.move_velocity(-200);
 
   while(Left.get_position() < 3300){
     Right.move_velocity(-150);
@@ -57,7 +60,6 @@ void autonomous() {
   Left2.move_velocity(0);
   Left.move_velocity(0);
 
-  Intake.move_relative(-2000, 200);
   pros::delay(1000);
 
   while(Left.get_position() > 70){
@@ -98,11 +100,11 @@ void autonomous() {
 
 	pros::delay(500);
 
-	Index.move_relative(1500, 200);
+	Index.move_relative(3000, 200);
 
 	pros::delay(200);
 
-	while(Left.get_position() < 4550){
+	while(Left.get_position() < 4750){
     Right.move_velocity(-100);
     Right2.move_velocity(-100);
     Left2.move_velocity(100);
@@ -115,8 +117,8 @@ void autonomous() {
 
 	pros::delay(200);
 
-	Intake.move_relative(-3000, 200);
-	Index.move_relative(3000, 200);
+	Index.move_relative(7000, 200);
+	Flywheel.move_velocity(125);
 
 	pros::delay(500);
 
@@ -130,7 +132,6 @@ void autonomous() {
   Right2.move_velocity(0);
   Left2.move_velocity(0);
   Left.move_velocity(0);
-	Intake.move_velocity(-200);
 
 	while(Left.get_position() < 3150){
     Right.move_velocity(30);
@@ -169,7 +170,7 @@ void autonomous() {
 
 	pros::delay(300);
 
-	while(Left.get_position() > 5450){
+	while(Left.get_position() > 5400){
     Right.move_velocity(-20);
     Right2.move_velocity(-20);
     Left2.move_velocity(-20);
@@ -180,7 +181,151 @@ void autonomous() {
   Left2.move_velocity(0);
   Left.move_velocity(0);
 
-	while(Left.get_position() < 6100){
+	pros::delay(300);
+
+	Index.move_relative(4500, 200);
+
+	pros::delay(1000);
+
+	//////////////////////////////PARK///////////////////////////
+	while(Left.get_position() > 4750){
+    Right.move_velocity(-20);
+    Right2.move_velocity(-20);
+    Left2.move_velocity(-20);
+    Left.move_velocity(-20);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+	while(Left.get_position() < 8000){
+    Right.move_velocity(-200);
+    Right2.move_velocity(-200);
+    Left2.move_velocity(200);
+    Left.move_velocity(200);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+	while(Left.get_position() > 4450){
+    Right.move_velocity(-200);
+    Right2.move_velocity(-200);
+    Left2.move_velocity(200);
+    Left.move_velocity(200);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+	while(Left.get_position() > 3450){
+    Right.move_velocity(-20);
+    Right2.move_velocity(-20);
+    Left2.move_velocity(20);
+    Left.move_velocity(20);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+	while(Left.get_position() > 6450){
+    Right.move_velocity(-100);
+    Right2.move_velocity(-100);
+    Left2.move_velocity(100);
+    Left.move_velocity(100);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+	while(Left.get_position() > 4450){
+    Right.move_velocity(-20);
+    Right2.move_velocity(-20);
+    Left2.move_velocity(-20);
+    Left.move_velocity(-20);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+	while(Left.get_position() < 5450){
+    Right.move_velocity(-200);
+    Right2.move_velocity(-200);
+    Left2.move_velocity(200);
+    Left.move_velocity(200);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+	while(Left.get_position() > 3450){
+    Right.move_velocity(200);
+    Right2.move_velocity(200);
+    Left2.move_velocity(-200);
+    Left.move_velocity(-200);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+	while(Left.get_position()  < 5000){
+    Right.move_velocity(-200);
+    Right2.move_velocity(-200);
+    Left2.move_velocity(200);
+    Left.move_velocity(200);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+
+	while(Left.get_position() > 4400){
+		Right.move_velocity(-20);
+		Right2.move_velocity(-20);
+		Left2.move_velocity(-20);
+		Left.move_velocity(-20);
+	}
+	Right.move_velocity(0);
+	Right2.move_velocity(0);
+	Left2.move_velocity(0);
+	Left.move_velocity(0);
+
+	while(Left.get_position() < 5500){
+		Right.move_velocity(-200);
+		Right2.move_velocity(-200);
+		Left2.move_velocity(200);
+		Left.move_velocity(200);
+	}
+	Right.move_velocity(0);
+	Right2.move_velocity(0);
+	Left2.move_velocity(0);
+	Left.move_velocity(0);
+
+	while(Left.get_position() > 4500){
+		Right.move_velocity(-20);
+		Right2.move_velocity(-20);
+		Left2.move_velocity(-20);
+		Left.move_velocity(-20);
+	}
+	Right.move_velocity(0);
+	Right2.move_velocity(0);
+	Left2.move_velocity(0);
+	Left.move_velocity(0);
+
+
+	///////////////////////RED FRONT/////////////////////////////////////////////
+/*
+	Flywheel.move_velocity(135);
+
+  while(Left.get_position() < 2800){
     Right.move_velocity(-50);
     Right2.move_velocity(-50);
     Left2.move_velocity(50);
@@ -190,14 +335,23 @@ void autonomous() {
   Right2.move_velocity(0);
   Left2.move_velocity(0);
   Left.move_velocity(0);
+	Intake.move_relative(-2000, 200);
 
+  pros::delay(1000);
 
-	Intake.move_relative(-3000, 200);
-	Index.move_relative(3000, 200);
+  while(Left.get_position() > 120){
+    Right.move_velocity(100);
+    Right2.move_velocity(100);
+    Left2.move_velocity(-100);
+    Left.move_velocity(-100);
+  }
 
-	pros::delay(300);
+	Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
 
-	while(Left.get_position() > 6000){
+	while(Left.get_position() > -650){
     Right.move_velocity(-20);
     Right2.move_velocity(-20);
     Left2.move_velocity(-20);
@@ -208,16 +362,58 @@ void autonomous() {
   Left2.move_velocity(0);
   Left.move_velocity(0);
 
-	while(Left.get_position() < 7000){
-    Right.move_velocity(-150);
-    Right2.move_velocity(-150);
-    Left2.move_velocity(150);
-    Left.move_velocity(150);
+	pros::delay(300);
+
+	while(Left.get_position() < -200){
+    Right.move_velocity(-100);
+    Right2.move_velocity(-100);
+    Left2.move_velocity(100);
+    Left.move_velocity(100);
   }
   Right.move_velocity(0);
   Right2.move_velocity(0);
   Left2.move_velocity(0);
   Left.move_velocity(0);
+
+	pros::delay(500);
+
+	Index.move_relative(2000, 200);
+
+	pros::delay(1000);
+
+	while(Left.get_position() < 400){
+    Right.move_velocity(-100);
+    Right2.move_velocity(-100);
+    Left2.move_velocity(100);
+    Left.move_velocity(100);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+	pros::delay(300);
+
+	Index.move_relative(3000, 200);
+	Intake.move_relative(-3000,200);
+
+	pros::delay(500);
+
+	while(Left.get_position() < 3000){
+    Right.move_velocity(-110);
+    Right2.move_velocity(-110);
+    Left2.move_velocity(100);
+    Left.move_velocity(100);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+*/
+
+
+
+
+
 
 
 
