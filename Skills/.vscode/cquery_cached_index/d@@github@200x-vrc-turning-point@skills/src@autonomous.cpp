@@ -73,7 +73,7 @@ void autonomous() {
   pros::delay(500);
 
 
-  while(Left.get_position() > -605){
+  while(Left.get_position() > -610){
     Right.move_velocity(-20);
     Right2.move_velocity(-20);
     Left2.move_velocity(-20);
@@ -95,11 +95,11 @@ void autonomous() {
   Left2.move_velocity(0);
   Left.move_velocity(0);
 
-	pros::delay(500);
+	pros::delay(1000);
 
-	Index.move_relative(3000, 200);
+	Index.move_relative(1500, 200);
 
-	pros::delay(200);
+	pros::delay(1000);
 
 	while(Left.get_position() < 4750){
     Right.move_velocity(-100);
@@ -207,62 +207,7 @@ void autonomous() {
   Left2.move_velocity(0);
   Left.move_velocity(0);
 
-	while(Left.get_position() > 4450){
-    Right.move_velocity(-200);
-    Right2.move_velocity(-200);
-    Left2.move_velocity(200);
-    Left.move_velocity(200);
-  }
-  Right.move_velocity(0);
-  Right2.move_velocity(0);
-  Left2.move_velocity(0);
-  Left.move_velocity(0);
-
-	while(Left.get_position() > 3450){
-    Right.move_velocity(-20);
-    Right2.move_velocity(-20);
-    Left2.move_velocity(20);
-    Left.move_velocity(20);
-  }
-  Right.move_velocity(0);
-  Right2.move_velocity(0);
-  Left2.move_velocity(0);
-  Left.move_velocity(0);
-
-	while(Left.get_position() > 6450){
-    Right.move_velocity(-100);
-    Right2.move_velocity(-100);
-    Left2.move_velocity(100);
-    Left.move_velocity(100);
-  }
-  Right.move_velocity(0);
-  Right2.move_velocity(0);
-  Left2.move_velocity(0);
-  Left.move_velocity(0);
-
-	while(Left.get_position() > 4450){
-    Right.move_velocity(-20);
-    Right2.move_velocity(-20);
-    Left2.move_velocity(-20);
-    Left.move_velocity(-20);
-  }
-  Right.move_velocity(0);
-  Right2.move_velocity(0);
-  Left2.move_velocity(0);
-  Left.move_velocity(0);
-
-	while(Left.get_position() < 5450){
-    Right.move_velocity(-200);
-    Right2.move_velocity(-200);
-    Left2.move_velocity(200);
-    Left.move_velocity(200);
-  }
-  Right.move_velocity(0);
-  Right2.move_velocity(0);
-  Left2.move_velocity(0);
-  Left.move_velocity(0);
-
-	while(Left.get_position() > 3450){
+	while(Left.get_position() > 7300){
     Right.move_velocity(200);
     Right2.move_velocity(200);
     Left2.move_velocity(-200);
@@ -273,47 +218,59 @@ void autonomous() {
   Left2.move_velocity(0);
   Left.move_velocity(0);
 
-	while(Left.get_position()  < 5000){
-    Right.move_velocity(-200);
-    Right2.move_velocity(-200);
-    Left2.move_velocity(200);
-    Left.move_velocity(200);
+	while(Left.get_position() > 6700){
+    Right.move_velocity(-20);
+    Right2.move_velocity(-20);
+    Left2.move_velocity(-20);
+    Left.move_velocity(-20);
   }
   Right.move_velocity(0);
   Right2.move_velocity(0);
   Left2.move_velocity(0);
   Left.move_velocity(0);
 
-	while(Left.get_position() > 4400){
-		Right.move_velocity(-20);
-		Right2.move_velocity(-20);
-		Left2.move_velocity(-20);
-		Left.move_velocity(-20);
-	}
-	Right.move_velocity(0);
-	Right2.move_velocity(0);
-	Left2.move_velocity(0);
-	Left.move_velocity(0);
+	while(Left.get_position() < 7500){
+    Right.move_velocity(-100);
+    Right2.move_velocity(-100);
+    Left2.move_velocity(100);
+    Left.move_velocity(100);
+  }
+  Right.move_velocity(0);
+  Right2.move_velocity(0);
+  Left2.move_velocity(0);
+  Left.move_velocity(0);
+	//
+	// while(Left.get_position() > 7800){
+  //   Right.move_velocity(-20);
+  //   Right2.move_velocity(-20);
+  //   Left2.move_velocity(-20);
+  //   Left.move_velocity(-20);
+  // }
+  // Right.move_velocity(0);
+  // Right2.move_velocity(0);
+  // Left2.move_velocity(0);
+  // Left.move_velocity(0);
+	//
+	// while(Left.get_position() > 6950){
+  //   Right.move_velocity(100);
+  //   Right2.move_velocity(100);
+  //   Left2.move_velocity(-100);
+  //   Left.move_velocity(-100);
+  // }
+  // Right.move_velocity(0);
+  // Right2.move_velocity(0);
+  // Left2.move_velocity(0);
+  // Left.move_velocity(0);
+	//
+	// while(Left.get_position() < 8450){
+  //   Right.move_velocity(-200);
+  //   Right2.move_velocity(-200);
+  //   Left2.move_velocity(200);
+  //   Left.move_velocity(200);
+  // }
+  // Right.move_velocity(0);
+  // Right2.move_velocity(0);
+  // Left2.move_velocity(0);
+  // Left.move_velocity(0);
 
-	while(Left.get_position() < 5500){
-		Right.move_velocity(-200);
-		Right2.move_velocity(-200);
-		Left2.move_velocity(200);
-		Left.move_velocity(200);
-	}
-	Right.move_velocity(0);
-	Right2.move_velocity(0);
-	Left2.move_velocity(0);
-	Left.move_velocity(0);
-
-	while(Left.get_position() > 4500){
-		Right.move_velocity(-20);
-		Right2.move_velocity(-20);
-		Left2.move_velocity(-20);
-		Left.move_velocity(-20);
-	}
-	Right.move_velocity(0);
-	Right2.move_velocity(0);
-	Left2.move_velocity(0);
-	Left.move_velocity(0);
 }

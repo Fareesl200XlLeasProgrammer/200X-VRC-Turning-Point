@@ -42,13 +42,14 @@ void autonomous() {
   Right2.set_brake_mode(MOTOR_BRAKE_HOLD);
   Left.set_brake_mode(MOTOR_BRAKE_HOLD);
   Left2.set_brake_mode(MOTOR_BRAKE_HOLD);
-  Flywheel.move_velocity(135);
 
-  while(Left.get_position() < 2800){
-    Right.move_velocity(-50);
-    Right2.move_velocity(-50);
-    Left2.move_velocity(50);
-    Left.move_velocity(50);
+  Flywheel.move_velocity(130);
+
+  while(Left.get_position() < 3100){
+    Right.move_velocity(-100);
+    Right2.move_velocity(-100);
+    Left2.move_velocity(100);
+    Left.move_velocity(100);
   }
   Right.move_velocity(0);
   Right2.move_velocity(0);
@@ -58,7 +59,7 @@ void autonomous() {
 
   pros::delay(1000);
 
-  while(Left.get_position() > 120){
+  while(Left.get_position() > 2500){
     Right.move_velocity(100);
     Right2.move_velocity(100);
     Left2.move_velocity(-100);
@@ -70,61 +71,91 @@ void autonomous() {
   Left2.move_velocity(0);
   Left.move_velocity(0);
 
-	while(Left.get_position() < 890){//-650
-    Right.move_velocity(20);
-    Right2.move_velocity(20);
-    Left2.move_velocity(20);
-    Left.move_velocity(20);
-  }
-  Right.move_velocity(0);
-  Right2.move_velocity(0);
-  Left2.move_velocity(0);
-  Left.move_velocity(0);
-
 	pros::delay(300);
 
-	while(Left.get_position() < 1340){//-200
-    Right.move_velocity(-100);
-    Right2.move_velocity(-100);
-    Left2.move_velocity(100);
-    Left.move_velocity(100);
+
+	while(Left.get_position() > 1940){
+    Right.move_velocity(-10);
+    Right2.move_velocity(-10);
+    Left2.move_velocity(-10);
+    Left.move_velocity(-10);
   }
-  Right.move_velocity(0);
+
+	Right.move_velocity(0);
   Right2.move_velocity(0);
   Left2.move_velocity(0);
   Left.move_velocity(0);
 
-	pros::delay(500);
+	pros::delay(200);
 
-	Index.move_relative(2000, 200);
+	Index.move_relative(1200, 200);
+
+	pros::delay(2000);
+
+	Flywheel.move_velocity(125);
 
 	pros::delay(1000);
 
-	while(Left.get_position() < 1940){
-    Right.move_velocity(-100);
-    Right2.move_velocity(-100);
-    Left2.move_velocity(100);
-    Left.move_velocity(100);
-  }
-  Right.move_velocity(0);
-  Right2.move_velocity(0);
-  Left2.move_velocity(0);
-  Left.move_velocity(0);
-	pros::delay(300);
+	Intake.move_velocity(-200);
+	Index.move_velocity(200);
 
-	Index.move_relative(3000, 200);
-	Intake.move_relative(-3000,200);
 
-	pros::delay(500);
 
-	while(Left.get_position() < 3000){
-    Right.move_velocity(-110);
-    Right2.move_velocity(-110);
-    Left2.move_velocity(100);
-    Left.move_velocity(100);
-  }
-  Right.move_velocity(0);
-  Right2.move_velocity(0);
-  Left2.move_velocity(0);
-  Left.move_velocity(0);
+	// while(Left.get_position() < 650){//-650
+  //   Right.move_velocity(20);
+  //   Right2.move_velocity(20);
+  //   Left2.move_velocity(20);
+  //   Left.move_velocity(20);
+  // }
+  // Right.move_velocity(0);
+  // Right2.move_velocity(0);
+  // Left2.move_velocity(0);
+  // Left.move_velocity(0);
+	//
+	// pros::delay(300);
+	//
+	// while(Left.get_position() < 1340){//-200
+  //   Right.move_velocity(-100);
+  //   Right2.move_velocity(-100);
+  //   Left2.move_velocity(100);
+  //   Left.move_velocity(100);
+  // }
+  // Right.move_velocity(0);
+  // Right2.move_velocity(0);
+  // Left2.move_velocity(0);
+  // Left.move_velocity(0);
+	//
+	// pros::delay(500);
+	//
+	// Index.move_relative(2000, 200);
+	//
+	// pros::delay(1000);
+	//
+	// while(Left.get_position() < 3000){
+  //   Right.move_velocity(-100);
+  //   Right2.move_velocity(-100);
+  //   Left2.move_velocity(100);
+  //   Left.move_velocity(100);
+  // }
+  // Right.move_velocity(0);
+  // Right2.move_velocity(0);
+  // Left2.move_velocity(0);
+  // Left.move_velocity(0);
+	// pros::delay(300);
+	//
+	// Index.move_relative(3000, 200);
+	// Intake.move_relative(-3000,200);
+	//
+	// pros::delay(500);
+	//
+	// while(Left.get_position() < 5000){
+  //   Right.move_velocity(-110);
+  //   Right2.move_velocity(-110);
+  //   Left2.move_velocity(100);
+  //   Left.move_velocity(100);
+  // }
+  // Right.move_velocity(0);
+  // Right2.move_velocity(0);
+  // Left2.move_velocity(0);
+  // Left.move_velocity(0);
 }
