@@ -1,6 +1,7 @@
 #include "main.h"
 
 void opcontrol() {
+	int FlywheelVel = 135;
 	//Motor Definitions
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
@@ -29,7 +30,7 @@ void opcontrol() {
 	Flipper.set_encoder_units(MOTOR_ENCODER_ROTATIONS);
 
 	while (true) {
-		Flywheel.move_velocity(135);
+		Flywheel.move_velocity(FlywheelVel);
 
     //Drive Code
     Right.move(master.get_analog(ANALOG_RIGHT_X)*0.8 - master.get_analog(ANALOG_LEFT_Y));
@@ -76,8 +77,11 @@ void opcontrol() {
     }
 
     if(master.get_digital(DIGITAL_A)){
-			Flywheel.move_velocity(127);
-			master.rumble("-");
+			Index.move_relative(500, 200);
+			Flywheel.move_velocity(120);
+			pros::delay(3000);
+			Intake.move_relative(-2000, 200);
+			Index.move_relative(2000, 200);
     }
 
 		else if(master.get_digital(DIGITAL_B)){
