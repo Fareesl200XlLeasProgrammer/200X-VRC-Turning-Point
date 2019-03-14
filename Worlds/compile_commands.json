@@ -28,7 +28,7 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "C:/Users/Farees/AppData/Local/Temp/tmpqhoyll43/autonomous.cpp.o",
+            "C:/Users/Farees/AppData/Local/Temp/tmp4r8u_i4q/autonomous.cpp.o",
             "src\\autonomous.cpp"
         ],
         "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\Worlds",
@@ -63,7 +63,7 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/opcontrol.cpp.o",
+            "C:/Users/Farees/AppData/Local/Temp/tmp4r8u_i4q/opcontrol.cpp.o",
             "src\\opcontrol.cpp"
         ],
         "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\Worlds",

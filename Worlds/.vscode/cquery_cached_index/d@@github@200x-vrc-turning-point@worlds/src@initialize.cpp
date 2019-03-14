@@ -4,7 +4,15 @@
 #include "../include/display/lvgl.h"
 #include "../include/display/lv_themes/lv_theme.h"
 
+#include "display/lv_themes/lv_theme_night.h"
+#include "display/lv_themes/lv_theme_night.c"
+
+#include "display/lv_themes2/lv_theme_material.h"
+#include "display/lv_themes2/lv_theme_material.c"
+
 int AutoCount;
+
+extern lv_theme_t * lv_theme_night_init(uint16_t hue, lv_font_t *font);
 
 static lv_res_t btn_click_action(lv_obj_t * btn1)
 {
@@ -40,7 +48,8 @@ static lv_res_t btn_click_action(lv_obj_t * btn1)
 
 
 void Gui(){
-	lv_theme_t * th = lv_theme_alien_init(100, NULL); 
+  lv_theme_set_current(lv_theme_alien_init(100, NULL));
+
 	lv_obj_t *tabview;
 	tabview = lv_tabview_create(lv_scr_act(), NULL);
 

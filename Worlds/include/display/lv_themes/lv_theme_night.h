@@ -3,23 +3,17 @@
  *
  */
 
-#ifndef LV_THEME_NIGHT_H
-#define LV_THEME_NIGHT_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+extern "C"
+
 
 /*********************
  *      INCLUDES
  *********************/
-#ifdef LV_CONF_INCLUDE_SIMPLE
-#include "lv_conf.h"
-#else
-#include "../include/display/lv_conf.h"
-#endif
 
-#if USE_LV_THEME_NIGHT
+#include "display/lv_conf.h"
+#include "display/lv_themes/lv_theme.h"
+
 
 /*********************
  *      DEFINES
@@ -51,10 +45,5 @@ lv_theme_t * lv_theme_get_night(void);
  *      MACROS
  **********************/
 
-#endif
 
-#ifdef __cplusplus
-} /* extern "C" */
-#endif
-
-#endif /*LV_THEME_NIGHT_H*/
+ /* extern "C" */
