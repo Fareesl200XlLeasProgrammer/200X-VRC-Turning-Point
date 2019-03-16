@@ -14,7 +14,9 @@
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+ extern void Gui();
 void opcontrol() {
+	Gui();
 	pros::Motor LeftF(1);
  	pros::Motor LeftB(2);
  	pros::Motor RightF(3, true);
