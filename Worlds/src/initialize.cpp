@@ -2,17 +2,11 @@
 #include "AutoVars.cpp"
 #include "../include/display/lv_conf.h"
 #include "../include/display/lvgl.h"
-#include "../include/display/lv_themes/lv_theme.h"
-
-#include "display/lv_themes/lv_theme_night.h"
-#include "display/lv_themes/lv_theme_night.c"
-
-#include "display/lv_themes2/lv_theme_material.h"
-#include "display/lv_themes2/lv_theme_material.c"
 
 int AutoCount;
 
-// extern lv_theme_t * lv_theme_alien_init(uint16_t hue, lv_font_t *font);
+extern const lv_img_t six_logo;
+extern const lv_img_t lance;
 
 static lv_res_t btn_click_action(lv_obj_t * btn1)
 {
@@ -56,8 +50,7 @@ void Gui(){
 
 	lv_obj_t *RedAutoSelect = lv_tabview_add_tab(tabview, "Red");//RedAutoSelect
 	lv_obj_t *BlueAutoSelect = lv_tabview_add_tab(tabview, "Blue");//BlueAutoSelect
-	lv_obj_t *Skillz = lv_tabview_add_tab(tabview, "Skillz");//Skills run
-	lv_obj_t *RPMSelect = lv_tabview_add_tab(tabview, "RPMSelect");//RPM selector
+	lv_obj_t *ShotTuner= lv_tabview_add_tab(tabview, "ShotTuner");//RPM selector
 
 	lv_obj_t * label = lv_label_create(RedAutoSelect, NULL);
 	lv_label_set_text(label, "Red Auto Selector\nClick the Button to switch Auto");
@@ -67,7 +60,7 @@ void Gui(){
 
 	lv_obj_t * btn1 = lv_btn_create(RedAutoSelect, NULL);
 	lv_cont_set_fit(btn1, true, true); /*Enable resizing horizontally and vertically*/
-	lv_obj_align(btn1, label, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 10);
+	lv_obj_align(btn1, label, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 35);
 	lv_obj_set_free_num(btn1, 1);   /*Set a unique number for the button*/
 	lv_btn_set_action(btn1, LV_BTN_ACTION_CLICK, btn_click_action);
 
@@ -79,7 +72,7 @@ void Gui(){
 
 	lv_obj_t * btn2 = lv_btn_create(RedAutoSelect, NULL);
 	lv_cont_set_fit(btn2, true, true); /*Enable resizing horizontally and vertically*/
-	lv_obj_align(btn2, label, LV_ALIGN_OUT_BOTTOM_RIGHT, 390, -50);
+	lv_obj_align(btn2, label, LV_ALIGN_OUT_BOTTOM_RIGHT, 390, -48);
 	lv_obj_set_free_num(btn2, 2);/*Set a unique number for the button*/
 	lv_btn_set_action(btn2, LV_BTN_ACTION_CLICK, btn_click_action);
 
@@ -102,7 +95,7 @@ void Gui(){
 	/*Button four*/
 	lv_obj_t * btn4 = lv_btn_create(BlueAutoSelect, NULL);
 	lv_cont_set_fit(btn4, true, true); /*Enable resizing horizontally and vertically*/
-	lv_obj_align(btn4, label, LV_ALIGN_OUT_BOTTOM_RIGHT, 390, -50);
+	lv_obj_align(btn4, label, LV_ALIGN_OUT_BOTTOM_RIGHT, 400, -50);
 	lv_obj_set_free_num(btn4, 4);/*Set a unique number for the button*/
 	lv_btn_set_action(btn4, LV_BTN_ACTION_CLICK, btn_click_action);
 
@@ -110,16 +103,14 @@ void Gui(){
 	label = lv_label_create(btn4, NULL);
 	lv_label_set_text(label, "Front");
 
-	/*Button five*/
-	lv_obj_t * btn5 = lv_btn_create(Skillz, NULL);
-	lv_cont_set_fit(btn5, true, true); /*Enable resizing horizontally and vertically*/
-	lv_obj_align(btn5, label, LV_ALIGN_OUT_BOTTOM_RIGHT, 390, -50);
-	lv_obj_set_free_num(btn5, 5);/*Set a unique number for the button*/
-	lv_btn_set_action(btn5, LV_BTN_ACTION_CLICK, btn_click_action);
+	lv_obj_t * sixLogo = lv_img_create(lv_scr_act(), NULL);
+	lv_img_set_src(sixLogo, &six_logo);
+	lv_obj_align(sixLogo, NULL, LV_ALIGN_IN_TOP_RIGHT, 30, 60);
 
-	/*Add a label to the button*/
-	label = lv_label_create(btn5, NULL);
-	lv_label_set_text(label, "SKILLZ");
+	lv_obj_t * LanceLogo = lv_img_create(lv_scr_act(), NULL);
+	lv_img_set_src(LanceLogo, &lance);
+	lv_obj_align(LanceLogo, NULL, LV_ALIGN_IN_TOP_RIGHT, -120, 190);
+
 }
 
 void initialize() {
@@ -131,7 +122,9 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {}
+void disabled() {
+  Gui();
+}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -142,4 +135,6 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+  Gui();
+}
