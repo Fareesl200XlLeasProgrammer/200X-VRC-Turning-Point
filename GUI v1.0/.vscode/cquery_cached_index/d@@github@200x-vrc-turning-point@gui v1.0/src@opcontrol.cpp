@@ -17,6 +17,8 @@
  */
 
 extern const lv_img_t six_logo;
+extern const lv_img_t lance;
+extern const lv_img_t shank;
 
 static lv_res_t btn_click_action(lv_obj_t * btn1)
 {
@@ -80,7 +82,7 @@ void Gui(){
 	/*Button four*/
 	lv_obj_t * btn4 = lv_btn_create(BlueAutoSelect, NULL);
 	lv_cont_set_fit(btn4, true, true); /*Enable resizing horizontally and vertically*/
-	lv_obj_align(btn4, label, LV_ALIGN_OUT_BOTTOM_RIGHT, 390, -50);
+	lv_obj_align(btn4, label, LV_ALIGN_OUT_BOTTOM_RIGHT, 400, -50);
 	lv_obj_set_free_num(btn4, 4);/*Set a unique number for the button*/
 	lv_btn_set_action(btn4, LV_BTN_ACTION_CLICK, btn_click_action);
 
@@ -92,9 +94,28 @@ void Gui(){
 	lv_img_set_src(sixLogo, &six_logo);
 	lv_obj_align(sixLogo, NULL, LV_ALIGN_IN_TOP_RIGHT, 30, 60);
 
+	lv_obj_t * LanceLogo = lv_img_create(lv_scr_act(), NULL);
+	lv_img_set_src(LanceLogo, &lance);
+	lv_obj_align(LanceLogo, NULL, LV_ALIGN_IN_TOP_RIGHT, -120, 190);
+
 }
 
 void opcontrol() {
-	Gui();
+	// Gui();
+  lv_obj_t * sixLogo = lv_img_create(lv_scr_act(), NULL);
+	lv_img_set_src(sixLogo, &six_logo);
+  lv_obj_t * LanceLogo = lv_img_create(lv_scr_act(), NULL);
+  lv_img_set_src(LanceLogo, &lance);
+  while(true){
+	lv_obj_align(sixLogo, NULL, LV_ALIGN_IN_TOP_RIGHT, 30, 60);
+
+  pros::delay(500);
+  lv_obj_del(sixLogo);
+
+	lv_obj_align(LanceLogo, NULL, LV_ALIGN_IN_TOP_RIGHT, -120, 190);
+  pros::delay(200);
+}
+
+
 
 }
