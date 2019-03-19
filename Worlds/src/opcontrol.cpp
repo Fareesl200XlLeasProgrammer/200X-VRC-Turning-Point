@@ -23,8 +23,8 @@ void drive_subsys(void*){
  	pros::Motor RightF(20, true);
  	pros::Motor RightB(11, true);
  	pros::Motor Intake(16);
- 	pros::Motor Puncher(21);
- 	pros::Motor Angler(15);
+ 	pros::Motor Puncher(18);
+ 	pros::Motor Angler(19);
 	pros::Motor Lift(17);
  	pros::ADIAnalogIn AnglePot (2);
 	pros::ADIAnalogIn IntakeLine_Top1 (3);
@@ -93,8 +93,8 @@ void opcontrol() {
  	pros::Motor RightF(20, true);
  	pros::Motor RightB(11, true);
  	pros::Motor Intake(16);
- 	pros::Motor Puncher(21);
- 	pros::Motor Angler(18);
+ 	pros::Motor Puncher(18);
+ 	pros::Motor Angler(19);
 	pros::Motor Lift(17);
  	pros::ADIAnalogIn AnglePot (2);
 	pros::ADIAnalogIn IntakeLine_Top1 (3);
@@ -110,6 +110,8 @@ void opcontrol() {
  	Angler.set_brake_mode(MOTOR_BRAKE_COAST);
 	Lift.set_brake_mode(MOTOR_BRAKE_HOLD);
  	Puncher.set_encoder_units(MOTOR_ENCODER_COUNTS);
+
+	while(true){
 
  	Puncher.tare_position();
  	while(Puncher.get_position() < 50){
@@ -181,6 +183,7 @@ void opcontrol() {
  			Puncher.move_velocity(0);
  		}
  	}
+}
 
 
  		pros::delay(20);
