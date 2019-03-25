@@ -14,23 +14,23 @@
  */
 void autonomous() {
   if(AutoCount == 1){
-    /** Call Auto Function*/
+    /** Call Red BaclAuto Function*/
   }
 
   if(AutoCount == 2){
-    /** Call Auto Function*/
+    /** Call Red Front Auto Function*/
   }
 
   if(AutoCount == 3){
-    /** Call Auto Function*/
+    /** Call Blue Back Auto Function*/
   }
 
   if(AutoCount == 3){
-    /** Call Auto Function*/
+    /** Call Blue Front Auto Function*/
   }
 
   if(AutoCount == 5){
-    /** Call Auto Function*/
+    /** Call Skills Auto Function*/
   }
 
 
