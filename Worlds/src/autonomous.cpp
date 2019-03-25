@@ -14,7 +14,7 @@
  */
 void autonomous() {
   if(AutoCount == 1){
-    /** Call Red BaclAuto Function*/
+    /** Call Red Back Auto Function*/
   }
 
   if(AutoCount == 2){
