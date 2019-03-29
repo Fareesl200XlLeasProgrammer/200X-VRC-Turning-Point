@@ -7,8 +7,6 @@
 void opcontrol() {
  	pros::Motor Intake(16);
 	pros::Motor Lift(5);
-  pros::Motor Puncher(6);
-  pros::ADIAnalogIn AnglePot (2);
 	pros::ADIAnalogIn IntakeLine_Top1 (3);
   pros::ADIGyro gyro (4);
 
@@ -21,19 +19,7 @@ void opcontrol() {
   pros::Task drive_task(Drive, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
 
 
-  // if(master.get_digital(DIGITAL_DOWN)){
-  //   pros::Task puncher_task(&anglerTask_fn);
-  // }
-  //tasks on buttons
-
-
-
- 	AnglePot.calibrate();
-
-
  	while (true) {
-
-
 		if(master.get_digital(DIGITAL_R1)){
 			Lift.move_velocity(200);
 		}
@@ -58,8 +44,7 @@ void opcontrol() {
 		 Intake.move_velocity(0);
 		}
 
- 		int AngleRead = AnglePot.get_value_calibrated();
- 		printf("Angle Potentiometer reading: %d\n", AnglePot.get_value_calibrated());
+ 		printf("Lift encoder reading: %f\n", Lift.get_position());
     pros::delay(20);
  		//////////////////////////////////////
  	  }

@@ -1,200 +1,57 @@
 #include "main.h"
 #include "api.h"
 #include "pros/rtos.h"
-#include "AutoVars.cpp"
 #include "functions.h"
-#include "../include/display/lv_conf.h"
-#include "../include/display/lvgl.h"
 
-void punchReset(){
+using namespace pros;//just so i dont have to do pros:: before everything
+
+void punchReset(){//function to reset puncher
   pros::Motor Puncher(6);
-  pros::Motor Angler(15);
-  pros::ADIAnalogIn AnglePot (2);
-
-  pros::Controller master(pros::E_CONTROLLER_MASTER);
-
-  Puncher.set_brake_mode(MOTOR_BRAKE_COAST);
-  Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
-  Puncher.set_encoder_units(MOTOR_ENCODER_ROTATIONS);
-
   Puncher.tare_position();
-  while(Puncher.get_position() < 1.08){
-    Puncher.move_velocity(200);
-  }
-  Puncher.move_velocity(0);
-
-}
-
-void angle_close_mid(){
-  pros::Motor Puncher(6);
-  pros::Motor Angler(15);
-  pros::ADIAnalogIn AnglePot (2);
-
-  AnglePot.calibrate();
-
-  while(AnglePot.get_value_calibrated() < 100){
-    Angler.move_velocity(200);
-  }
-  Angler.move_velocity(0);
-
-}
-
-void punch_shoot_reset() {
-  pros::Motor Puncher(6);
-  pros::Motor Angler(15);
-  pros::ADIAnalogIn AnglePot (2);
-
-  pros::Controller master(pros::E_CONTROLLER_MASTER);
-
   Puncher.set_brake_mode(MOTOR_BRAKE_COAST);
-  Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
-  Puncher.set_encoder_units(MOTOR_ENCODER_ROTATIONS);
-
-  Puncher.tare_position();
-  while(Puncher.get_position() < 2.2){
+  while(Puncher.get_position() < 1200){
     Puncher.move_velocity(200);
   }
   Puncher.move_velocity(0);
 }
 
 
-void puncher(void*){
+
+void angle_close_mid(void*){
+  pros::Motor Angler(15);
   pros::Motor Puncher(6);
-	pros::Motor Angler(15);
-	pros::ADIAnalogIn AnglePot (2);
+  pros::Controller master(pros::E_CONTROLLER_MASTER);
 
+  Angler.tare_position();
+  Angler.set_zero_position(0);
 
- 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-
-	Puncher.set_brake_mode(MOTOR_BRAKE_COAST);
-	Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
-	Puncher.set_encoder_units(MOTOR_ENCODER_COUNTS);
-
-	AnglePot.calibrate();
-
-	while(true){
-
- 		if(master.get_digital(DIGITAL_X)){
+  while(true){
+    if(master.get_digital(DIGITAL_Y)){//DONT TOUCH THIS YOU DUMB FUCK
+      Angler.tare_position();
+      Angler.move_absolute(160, 200);
       punchReset();
-      bool check = true;
-      if(check == true && AnglePot.get_value_calibrated() > 0){
-        while(AnglePot.get_value_calibrated() > 0){
-          Angler.move_velocity(-200);
-        }
-        Angler.move_velocity(0);
-      }
- 		}
- 		else{
- 			Puncher.move_velocity(0);
- 		}
+      Angler.move_absolute(0, 200);
+      delay(20);
+    }
 
-	}
-
-
-}
-
-void Drive(void*){
-  pros::Motor LeftF(10);
-  pros::Motor LeftB(1);
-  pros::Motor RightF(20, true);
-  pros::Motor RightB(11, true);
-
-  pros::Controller master(pros::E_CONTROLLER_MASTER);
-
-  RightF.set_brake_mode(MOTOR_BRAKE_HOLD);
-  RightB.set_brake_mode(MOTOR_BRAKE_HOLD);
-  LeftF.set_brake_mode(MOTOR_BRAKE_HOLD);
-  LeftB.set_brake_mode(MOTOR_BRAKE_HOLD);
-  while(true){
-    if(master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_LEFT_X) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0){
-			LeftF.move_velocity(0);
-			LeftB.move_velocity(0);
-			RightB.move_velocity(0);
-			RightF.move_velocity(0);
-		}
-		else {//drive code
-			LeftF.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_RIGHT_X) + master.get_analog(ANALOG_LEFT_X));
-			LeftB.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_RIGHT_X) - master.get_analog(ANALOG_LEFT_X));
-			RightF.move(master.get_analog(ANALOG_LEFT_Y) - master.get_analog(ANALOG_RIGHT_X) - master.get_analog(ANALOG_LEFT_X));
-			RightB.move(master.get_analog(ANALOG_LEFT_Y) - master.get_analog(ANALOG_RIGHT_X) + master.get_analog(ANALOG_LEFT_X));
-		}
-    pros::delay(20);
-
-
-  }
-
-}
-
-void anglerTask_fn(void*param){
-  pros::Motor Puncher(6);
-  pros::Motor Angler(15);
-  pros::ADIAnalogIn AnglePot (2);
-  pros::Controller master(pros::E_CONTROLLER_MASTER);
-
-  Puncher.set_brake_mode(MOTOR_BRAKE_COAST);
-  Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
-  Puncher.set_encoder_units(MOTOR_ENCODER_ROTATIONS);
-
-  AnglePot.calibrate();
-
-  int count = 0;
-  while(true){
-    if(master.get_digital(DIGITAL_Y)){
-      switch (count) {
-        case 0:
-          while(AnglePot.get_value_calibrated() < 15){
-            Angler.move_velocity(200);
-          }
-          Angler.move_velocity(0);
-          count ++;
-        break;
-      }
-
+    if(master.get_digital(DIGITAL_X)){
+      Angler.move_absolute(0, 200);
+      punchReset();
     }
 
     if(master.get_digital(DIGITAL_A)){
-      switch (count) {
-        case 1:
-          while(AnglePot.get_value_calibrated() < 1.7){
-            Angler.move_velocity(200);
-          }
-          Angler.move_velocity(0);
-          count = 0;
-        break;
-      }
-
-      }
-
-    else if(master.get_digital(DIGITAL_X)){
-      Puncher.tare_position();
-      while(Puncher.get_position() < 2.16){
-        Puncher.move_velocity(200);
-      }
+      Angler.move_absolute(90, 200);
+      punchReset();
+      Angler.move_absolute(0, 200);
     }
-
-    // if(master.get_digital(DIGITAL_A)){
-    //   while(AnglePot.get_value_calibrated() < 2.5){
-    //     Angler.move_velocity(200);
-    //   }
-    //   Angler.move_velocity(0);
-    //
-    //   }
-
-
-    else{
-      Angler.move_velocity(0);
-    }
-    pros::delay(20);
+    delay(20);
   }
 }
-
-int AutoCount;
 
 extern const lv_img_t six_logo;
 extern const lv_img_t lance;
 
-static lv_res_t btn_click_action(lv_obj_t * btn1)
-{
+static lv_res_t btn_click_action(lv_obj_t * btn1){
     uint8_t id = lv_obj_get_free_num(btn1);
 
     if(id == 1){
@@ -225,8 +82,7 @@ static lv_res_t btn_click_action(lv_obj_t * btn1)
     return LV_RES_OK; /*Return OK if the button is not deleted*/
 }
 
-
-void Gui(void*){
+void Gui(){
   lv_theme_t * th = lv_theme_alien_init(100, NULL);
 
 	lv_obj_t *tabview;
@@ -294,5 +150,39 @@ void Gui(void*){
 	lv_obj_t * LanceLogo = lv_img_create(lv_scr_act(), NULL);
 	lv_img_set_src(LanceLogo, &lance);
 	lv_obj_align(LanceLogo, NULL, LV_ALIGN_IN_TOP_RIGHT, -120, 190);
+
+}
+
+void Drive(void*){
+  pros::Motor LeftF(10);
+  pros::Motor LeftB(1);
+  pros::Motor RightF(20, true);
+  pros::Motor RightB(11, true);
+  pros::Motor Puncher(6);
+
+  Puncher.tare_position();
+
+  pros::Controller master(pros::E_CONTROLLER_MASTER);
+
+  RightF.set_brake_mode(MOTOR_BRAKE_HOLD);
+  RightB.set_brake_mode(MOTOR_BRAKE_HOLD);
+  LeftF.set_brake_mode(MOTOR_BRAKE_HOLD);
+  LeftB.set_brake_mode(MOTOR_BRAKE_HOLD);
+  while(true){
+    // Gui();
+    if(master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_LEFT_X) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0){
+			LeftF.move_velocity(0);
+			LeftB.move_velocity(0);
+			RightB.move_velocity(0);
+			RightF.move_velocity(0);
+		}
+		else {//drive code
+			LeftF.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_RIGHT_X) + master.get_analog(ANALOG_LEFT_X));
+			LeftB.move(master.get_analog(ANALOG_LEFT_Y) + master.get_analog(ANALOG_RIGHT_X) - master.get_analog(ANALOG_LEFT_X));
+			RightF.move(master.get_analog(ANALOG_LEFT_Y) - master.get_analog(ANALOG_RIGHT_X) - master.get_analog(ANALOG_LEFT_X));
+			RightB.move(master.get_analog(ANALOG_LEFT_Y) - master.get_analog(ANALOG_RIGHT_X) + master.get_analog(ANALOG_LEFT_X));
+		}
+    delay(20);
+  }
 
 }

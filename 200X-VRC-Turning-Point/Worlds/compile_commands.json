@@ -24,11 +24,11 @@
             "-fdiagnostics-color",
             "--std=gnu11",
             "-o",
-            "C:/Users/Farees/AppData/Local/Temp/tmp4s_ixgqp/lance.c.o",
-            "src\\lance.c"
+            "C:/Users/Farees/AppData/Local/Temp/tmpefj6m0sh/six_logo.c.o",
+            "src\\six_logo.c"
         ],
         "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\Worlds",
-        "file": "src\\lance.c"
+        "file": "src\\six_logo.c"
     },
     {
         "arguments": [
@@ -55,11 +55,11 @@
             "-fdiagnostics-color",
             "--std=gnu11",
             "-o",
-            "C:/Users/Farees/AppData/Local/Temp/tmp4s_ixgqp/six_logo.c.o",
-            "src\\six_logo.c"
+            "C:/Users/Farees/AppData/Local/Temp/tmpefj6m0sh/lance.c.o",
+            "src\\lance.c"
         ],
         "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\Worlds",
-        "file": "src\\six_logo.c"
+        "file": "src\\lance.c"
     },
     {
         "arguments": [
@@ -90,7 +90,7 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "C:/Users/Farees/AppData/Local/Temp/tmp4s_ixgqp/autonomous.cpp.o",
+            "bin/autonomous.cpp.o",
             "src\\autonomous.cpp"
         ],
         "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\Worlds",

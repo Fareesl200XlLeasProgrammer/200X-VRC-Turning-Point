@@ -4,6 +4,9 @@
 #include "../include/display/lv_conf.h"
 #include "../include/display/lvgl.h"
 
+int AutoCount;
+
+
 
 
 void initialize() {
