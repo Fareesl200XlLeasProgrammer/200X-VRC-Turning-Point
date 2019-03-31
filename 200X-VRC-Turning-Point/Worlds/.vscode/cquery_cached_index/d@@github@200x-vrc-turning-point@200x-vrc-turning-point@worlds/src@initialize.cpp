@@ -6,11 +6,10 @@
 
 int AutoCount;
 
-
-
-
 void initialize() {
-	// Gui();
+	pros::ADIGyro Gyro(4);
+  pros::delay(2000);
+	Gui();
 }
 
 /**
@@ -19,7 +18,7 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-  // Gui();
+  Gui();
 }
 
 /**
@@ -32,5 +31,5 @@ void disabled() {
  * starts.
  */
 void competition_initialize() {
-  // Gui();
+  Gui();
 }
