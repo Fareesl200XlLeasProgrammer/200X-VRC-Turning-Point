@@ -4,6 +4,7 @@
 #include "functions.h"
 
 using namespace pros;//just so i dont have to do pros:: before everything
+using namespace okapi;
 
 void punchReset(){//function to reset puncher
   pros::Motor Puncher(6);
@@ -16,43 +17,36 @@ void punchReset(){//function to reset puncher
 }
 
 
-
 void angle_close_mid(void*){
   pros::Motor Angler(15);
   pros::Motor Puncher(6);
   pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-  Angler.tare_position();
-  Angler.set_zero_position(0);
-
-  auto anglePID = AsyncControllerFactory::posPID151, 5, 0.0, 0.01);
-  while(Puncher.get_position() < 600){
-    Puncher.move_velocity(200);
-  }
-  
-  Puncher.move_velocity(0);
-
   while(true){
+
     if(master.get_digital(DIGITAL_Y)){//DONT TOUCH THIS YOU DUMB FUCK
-      // Angler.move_absolute(160, 30);
-      anglePID.setTarget(250);
+      Angler.tare_position();
+      Angler.move_absolute(160, 70);
       punchReset();
       Angler.move_absolute(0, 200);
       delay(20);
     }
 
-  //   if(master.get_digital(DIGITAL_X)){
-  //     Angler.move_absolute(0, 200);
-  //     punchReset();
-  //   }
-  //
-  //   if(master.get_digital(DIGITAL_A)){
-  //     Angler.move_absolute(200, 30);
-  //     punchReset();
-  //     Angler.move_absolute(0, 200);
-  //   }
-  //   delay(20);
-  // }
+    if(master.get_digital(DIGITAL_X)){
+      Angler.tare_position();
+      Angler.move_absolute(0, 200);
+      punchReset();
+      Angler.move_absolute(0, 200);
+    }
+
+    if(master.get_digital(DIGITAL_A)){
+      Angler.tare_position();
+      Angler.move_absolute(90, 200);
+      punchReset();
+      Angler.move_absolute(0, 200);
+    }
+    delay(20);
+  }
 }
 
 extern const lv_img_t six_logo;
@@ -175,8 +169,8 @@ void Drive(void*){
   RightB.set_brake_mode(MOTOR_BRAKE_HOLD);
   LeftF.set_brake_mode(MOTOR_BRAKE_HOLD);
   LeftB.set_brake_mode(MOTOR_BRAKE_HOLD);
+
   while(true){
-    // Gui();
     if(master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_LEFT_X) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0){
 			LeftF.move_velocity(0);
 			LeftB.move_velocity(0);
