@@ -6,10 +6,9 @@
 
 int AutoCount;
 
-
-
-
 void initialize() {
+	pros::ADIGyro Gyro(4);
+  pros::delay(2000);
 	Gui();
 }
 
