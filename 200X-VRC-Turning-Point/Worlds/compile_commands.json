@@ -8,9 +8,6 @@
             "-fno-ms-extensions",
             "-fno-ms-compatibility",
             "-fno-delayed-template-parsing",
-            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
-            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
-            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
             "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
             "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
             "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
@@ -22,17 +19,16 @@
             "-D_POSIX_THREADS",
             "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
             "-Os",
-            "-funwind-tables",
             "-ffunction-sections",
             "-fdata-sections",
             "-fdiagnostics-color",
-            "--std=gnu++17",
+            "--std=gnu11",
             "-o",
-            "C:/Users/Farees/AppData/Local/Temp/tmpd1z5f20b/functions.cpp.o",
-            "src\\functions.cpp"
+            "C:/Users/Farees/AppData/Local/Temp/tmprvvctbnu/six_logo.c.o",
+            "src\\six_logo.c"
         ],
         "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\Worlds",
-        "file": "src\\functions.cpp"
+        "file": "src\\six_logo.c"
     },
     {
         "arguments": [
@@ -63,11 +59,46 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "C:/Users/Farees/AppData/Local/Temp/tmpd1z5f20b/initialize.cpp.o",
+            "C:/Users/Farees/AppData/Local/Temp/tmprvvctbnu/initialize.cpp.o",
             "src\\initialize.cpp"
         ],
         "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\Worlds",
         "file": "src\\initialize.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-target",
+            "armv7ar-none-none-eabi",
+            "-fno-ms-extensions",
+            "-fno-ms-compatibility",
+            "-fno-delayed-template-parsing",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
+            "-iquote./include",
+            "-iquote./include/./",
+            "-mcpu=cortex-a9",
+            "-mfpu=neon-fp16",
+            "-mfloat-abi=softfp",
+            "-D_POSIX_THREADS",
+            "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
+            "-Os",
+            "-funwind-tables",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-fdiagnostics-color",
+            "--std=gnu++17",
+            "-o",
+            "C:/Users/Farees/AppData/Local/Temp/tmprvvctbnu/autonomous.cpp.o",
+            "src\\autonomous.cpp"
+        ],
+        "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\Worlds",
+        "file": "src\\autonomous.cpp"
     },
     {
         "arguments": [
@@ -94,7 +125,7 @@
             "-fdiagnostics-color",
             "--std=gnu11",
             "-o",
-            "C:/Users/Farees/AppData/Local/Temp/tmpd1z5f20b/lance.c.o",
+            "C:/Users/Farees/AppData/Local/Temp/tmprvvctbnu/lance.c.o",
             "src\\lance.c"
         ],
         "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\Worlds",
@@ -129,11 +160,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "C:/Users/Farees/AppData/Local/Temp/tmpd1z5f20b/autonomous.cpp.o",
-            "src\\autonomous.cpp"
+            "bin/motorDefs.cpp.o",
+            "src\\motorDefs.cpp"
         ],
         "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\Worlds",
-        "file": "src\\autonomous.cpp"
+        "file": "src\\motorDefs.cpp"
     },
     {
         "arguments": [
@@ -144,6 +175,9 @@
             "-fno-ms-extensions",
             "-fno-ms-compatibility",
             "-fno-delayed-template-parsing",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
             "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
             "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
             "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
@@ -155,16 +189,17 @@
             "-D_POSIX_THREADS",
             "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
             "-Os",
+            "-funwind-tables",
             "-ffunction-sections",
             "-fdata-sections",
             "-fdiagnostics-color",
-            "--std=gnu11",
+            "--std=gnu++17",
             "-o",
-            "C:/Users/Farees/AppData/Local/Temp/tmpd1z5f20b/six_logo.c.o",
-            "src\\six_logo.c"
+            "bin/functions.cpp.o",
+            "src\\functions.cpp"
         ],
         "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\Worlds",
-        "file": "src\\six_logo.c"
+        "file": "src\\functions.cpp"
     },
     {
         "arguments": [

@@ -2,18 +2,19 @@
 #include "api.h"
 #include "pros/rtos.h"
 #include "functions.h"
+#include "motorDefs.h"
 void PIDTurn(double target){
-  pros::Motor Intake(16);
-	pros::Motor Lift(5);
-	pros::ADIAnalogIn IntakeLine_Top1 (3);
-  pros::ADIGyro gyro (4);
-
-  pros::Motor LeftF(10);
-  pros::Motor LeftB(1);
-  pros::Motor RightF(20, true);
-  pros::Motor RightB(11, true);
-
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
+  // pros::Motor Intake(16);
+	// pros::Motor Lift(5);
+	// pros::ADIAnalogIn IntakeLine_Top1 (3);
+  // pros::ADIGyro gyro (4);
+  //
+  // pros::Motor LeftF(10);
+  // pros::Motor LeftB(1);
+  // pros::Motor RightF(20, true);
+  // pros::Motor RightB(11, true);
+  //
+	// pros::Controller master(pros::E_CONTROLLER_MASTER);
   gyro.reset();
 
   double kP = 0.3;
@@ -23,7 +24,6 @@ void PIDTurn(double target){
   double totalError;
   double lastError;
   double pwr;
-  // double target = -900;
   do{
     double current = gyro.get_value();
     error = target - current;
@@ -40,7 +40,7 @@ void PIDTurn(double target){
     if(error ==0){
       I = 0;
     }
-  } while(true);
+  } while(!(error<= 5 && error>= -5));
   LeftF.move_velocity(0);
   LeftB.move_velocity(0);
   RightF.move_velocity(0);
@@ -48,15 +48,15 @@ void PIDTurn(double target){
 }
 
 void PIDDrive(double target){
-  pros::Motor Intake(16);
-	pros::Motor Lift(5);
-	pros::ADIAnalogIn IntakeLine_Top1 (3);
-  pros::ADIGyro gyro (4);
-
-  pros::Motor LeftF(10);
-  pros::Motor LeftB(1);
-  pros::Motor RightF(20, true);
-  pros::Motor RightB(11, true);
+  // pros::Motor Intake(16);
+	// pros::Motor Lift(5);
+	// pros::ADIAnalogIn IntakeLine_Top1 (3);
+  // pros::ADIGyro gyro (4);
+  //
+  // pros::Motor LeftF(10);
+  // pros::Motor LeftB(1);
+  // pros::Motor RightF(20, true);
+  // pros::Motor RightB(11, true);
 
   double kP = 0.3;
   double kI = 0.000003;
@@ -105,14 +105,14 @@ void PIDDrive(double target){
 }
 
 void anglePID(double target){
-  pros::Motor Angler(15);
-  Angler.set_brake_mode(MOTOR_BRAKE_COAST);
-  pros::ADIPotentiometer anglePot(2);
+  // pros::Motor Angler(15);
+  Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
+  // pros::ADIPotentiometer anglePot(2);
 
   double current;
-  double kP = 0.6;
-  double kI = 0.0000003;
-  double kD = 1.35;
+  double kP = 0.25;
+  double kI = 0.000000;
+  double kD = 0.75;
   double error;
   double totalError;
   double lastError;
@@ -139,31 +139,21 @@ void anglePID(double target){
 }
 
 void opcontrol() {
- 	pros::Motor Intake(16);
-	pros::Motor Lift(5);
-	pros::ADIAnalogIn IntakeLine_Top1 (3);
-  pros::ADIGyro gyro (4);
-
-  pros::Motor LeftF(10);
-  pros::Motor LeftB(1);
-  pros::Motor RightF(20, true);
-  pros::Motor RightB(11, true);
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
  	Intake.set_brake_mode(MOTOR_BRAKE_HOLD);
 	Lift.set_brake_mode(MOTOR_BRAKE_HOLD);
-
-
-
   // PIDTurn(900);
   // pros::delay(1000);
   // PIDDrive(800);
-  pros::Task puncher_task(angle_close_mid,(void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
+  pros::Task puncher_task(puncherTask,(void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
   pros::Task drive_task(Drive, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
 
-  // anglePID(2200);
-
   while(true){
+
+    if(master.get_digital(DIGITAL_X)){
+      Puncher.move_relative(1200, 200);
+    }
+
 		if(master.get_digital(DIGITAL_R1)){
 			Lift.move_velocity(200);
 		}
@@ -187,7 +177,22 @@ void opcontrol() {
 	 else{
 		 Intake.move_velocity(0);
 		}
+
+    if(master.get_digital(DIGITAL_Y)){
+      Puncher.tare_position();
+      Intake.tare_position();
+      anglePID(2150);
+      while(Puncher.get_position() < 1200){
+        Puncher.move_velocity(200);
+      }
+      Puncher.move_velocity(0);
+      while(Intake.get_position() < 800){
+        Intake.move_velocity(200);
+      }
+      Intake.move_velocity(0);
+
+    }
+
     pros::delay(20);
- 		// //////////////////////////////////////
   }
 }

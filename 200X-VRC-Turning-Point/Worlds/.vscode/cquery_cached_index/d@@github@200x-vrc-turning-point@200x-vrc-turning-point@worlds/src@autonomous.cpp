@@ -3,6 +3,7 @@
 #include "functions.h"
 #include "Autos.h"
 #include "AutoVars.cpp"
+#include "motorDefs.h"
 
 using namespace okapi;
 using namespace pros;
@@ -60,15 +61,6 @@ using namespace pros;
 
 
 void autonomous() {
-  pros::Motor Puncher(6);
-  pros::Motor Angler(15);
-  pros::Motor Intake(16);
-	pros::Motor Lift(5);
-  pros::Motor LeftF(1);
-  pros::Motor LeftB(10);
-  pros::Motor RightF(20,true);
-  pros::Motor RightB(11,true);
-  pros::ADIGyro GyroAuto(4);
 
 
   auto myChassis = ChassisControllerFactory::create(
@@ -85,25 +77,25 @@ void autonomous() {
     10.0, // Maximum linear jerk of the Chassis in m/s/s/s
     myChassis // Chassis Controller
   );
-  // if(AutoCount == 1){
-  //   /** Call Auto Function*/
-  // }
-  //
-  // if(AutoCount == 2){
-  //   /** Call Auto Function*/
-  // }
-  //
-  // if(AutoCount == 3){
-  //   /** Call Auto Function*/
-  // }
-  //
-  // if(AutoCount == 3){
-  //   /** Call Auto Function*/
-  // }
-  //
-  // if(AutoCount == 5){
-  //   /** Call Auto Function*/
-  // }
+  if(AutoCount == 1){
+    /** Call Auto Function*/
+  }
+
+  if(AutoCount == 2){
+    /** Call Auto Function*/
+  }
+
+  if(AutoCount == 3){
+    /** Call Auto Function*/
+  }
+
+  if(AutoCount == 3){
+    /** Call Auto Function*/
+  }
+
+  if(AutoCount == 5){
+    /** Call Auto Function*/
+  }
 
   // profileController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{4_ft, 0_ft, 0_deg}}, "firstCap");
   // profileController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{4_ft, 0_ft, 0_deg}}, "firstCap2");

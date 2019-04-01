@@ -1,14 +1,14 @@
 #include "main.h"
 #include "AutoVars.cpp"
 #include "functions.h"
+#include "motorDefs.h"
 #include "../include/display/lv_conf.h"
 #include "../include/display/lvgl.h"
 
 int AutoCount;
 
 void initialize() {
-	pros::ADIGyro Gyro(4);
-  pros::delay(2000);
+	pros::delay(2000);
 	Gui();
 }
 

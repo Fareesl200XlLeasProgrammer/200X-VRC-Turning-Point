@@ -2,49 +2,36 @@
 #include "api.h"
 #include "pros/rtos.h"
 #include "functions.h"
+#include "motorDefs.h"
 
 using namespace pros;//just so i dont have to do pros:: before everything
 using namespace okapi;
 
-void punchReset(){//function to reset puncher
-  pros::Motor Puncher(6);
-  Puncher.tare_position();
-  Puncher.set_brake_mode(MOTOR_BRAKE_COAST);
-  while(Puncher.get_position() < 1200){
-    Puncher.move_velocity(200);
+void puncherTask(void*){//function to reset puncher
+  while(true){
+    if(master.get_digital(DIGITAL_Y)){
+      Puncher.tare_position();
+      while(Puncher.get_position() < 2.16){
+        Puncher.move_velocity(200);
+      }
+      Puncher.move_velocity(0);
+    }
+
+    if(master.get_digital(DIGITAL_X)){
+      Puncher.tare_position();
+      while(Puncher.get_position() < 2.16){
+        Puncher.move_velocity(200);
+      }
+      Puncher.move_velocity(0);
+    }
+    pros::delay(20);
   }
-  Puncher.move_velocity(0);
 }
 
 
 void angle_close_mid(void*){
-  pros::Motor Angler(15);
-  pros::Motor Puncher(6);
-  pros::Controller master(pros::E_CONTROLLER_MASTER);
-
   while(true){
 
-    if(master.get_digital(DIGITAL_Y)){//DONT TOUCH THIS YOU DUMB FUCK
-      Angler.tare_position();
-      Angler.move_absolute(160, 70);
-      punchReset();
-      Angler.move_absolute(0, 200);
-      delay(20);
-    }
-
-    if(master.get_digital(DIGITAL_X)){
-      Angler.tare_position();
-      Angler.move_absolute(0, 200);
-      punchReset();
-      Angler.move_absolute(0, 200);
-    }
-
-    if(master.get_digital(DIGITAL_A)){
-      Angler.tare_position();
-      Angler.move_absolute(90, 200);
-      punchReset();
-      Angler.move_absolute(0, 200);
-    }
     delay(20);
   }
 }
@@ -155,20 +142,11 @@ void Gui(){
 }
 
 void Drive(void*){
-  pros::Motor LeftF(10);
-  pros::Motor LeftB(1);
-  pros::Motor RightF(20, true);
-  pros::Motor RightB(11, true);
-  pros::Motor Puncher(6);
-
-  Puncher.tare_position();
-
-  pros::Controller master(pros::E_CONTROLLER_MASTER);
-
   RightF.set_brake_mode(MOTOR_BRAKE_HOLD);
   RightB.set_brake_mode(MOTOR_BRAKE_HOLD);
   LeftF.set_brake_mode(MOTOR_BRAKE_HOLD);
   LeftB.set_brake_mode(MOTOR_BRAKE_HOLD);
+  Puncher.set_encoder_units(MOTOR_ENCODER_COUNTS);
 
   while(true){
     if(master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_LEFT_X) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0){
@@ -183,6 +161,7 @@ void Drive(void*){
 			RightF.move(master.get_analog(ANALOG_LEFT_Y) - master.get_analog(ANALOG_RIGHT_X) - master.get_analog(ANALOG_LEFT_X));
 			RightB.move(master.get_analog(ANALOG_LEFT_Y) - master.get_analog(ANALOG_RIGHT_X) + master.get_analog(ANALOG_LEFT_X));
 		}
+
     delay(20);
   }
 
