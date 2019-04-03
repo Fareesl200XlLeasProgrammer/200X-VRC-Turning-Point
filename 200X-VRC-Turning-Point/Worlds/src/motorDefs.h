@@ -14,4 +14,4 @@ extern pros::Controller master;
 
 extern pros::ADIAnalogIn IntakeLine_Top1;
 extern pros::ADIGyro gyro;
-extern pros::ADIPotentiometer anglePot;
+extern pros::ADIPotentiometer AnglePot;

@@ -8,33 +8,68 @@ using namespace pros;//just so i dont have to do pros:: before everything
 using namespace okapi;
 
 void puncherTask(void*){//function to reset puncher
+  Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
+  AnglePot.calibrate();
+
   while(true){
-    if(master.get_digital(DIGITAL_Y)){
+    printf("Angler: %f\n",AnglePot.get_value_calibrated());
+    if(Puncher.get_position() == 1800){
       Puncher.tare_position();
-      while(Puncher.get_position() < 2.16){
+    }
+		if(master.get_digital(DIGITAL_B)){
+
+ 		}
+
+		//Puncher Preset Top Full Court
+ 		else if(master.get_digital(DIGITAL_Y)){//middle   IF BROKEN CHANGE TO 105
+      Puncher.tare_position();
+      while(AnglePot.get_value_calibrated() < 50){
+        Angler.move_velocity(70);
+      }
+      Angler.move_velocity(0);
+      while(Puncher.get_position() < 1800){
         Puncher.move_velocity(200);
       }
       Puncher.move_velocity(0);
+
+      while(AnglePot.get_value_calibrated() > 0){
+        Angler.move_velocity(-200);
+      }
+      Angler.move_velocity(0);
+
+ 		}
+
+		else if(master.get_digital(DIGITAL_A)){//top
+
+		}
+
+
+    else if(master.get_digital(DIGITAL_UP)){//top platform
+
+		}
+
+    else if(master.get_digital(DIGITAL_DOWN)){// middle platform
+
     }
 
-    if(master.get_digital(DIGITAL_X)){
-      Puncher.tare_position();
-      while(Puncher.get_position() < 2.16){
-        Puncher.move_velocity(200);
-      }
-      Puncher.move_velocity(0);
+    else if(master.get_digital(DIGITAL_LEFT)){// Back Double Shot
+
     }
+
+    else if(master.get_digital(DIGITAL_X)){//default
+			Puncher.tare_position();
+			while(Puncher.get_position() < 2100){
+ 				Puncher.move_velocity(200);
+ 			}
+ 			Puncher.move_velocity(0);
+ 		}
+ 		else{
+        Puncher.move_velocity(0);
+ 		}
     pros::delay(20);
-  }
+	}
 }
 
-
-void angle_close_mid(void*){
-  while(true){
-
-    delay(20);
-  }
-}
 
 extern const lv_img_t six_logo;
 extern const lv_img_t lance;

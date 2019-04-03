@@ -9,6 +9,7 @@ int AutoCount;
 
 void initialize() {
 	pros::delay(2000);
+	AnglePot.calibrate();
 	Gui();
 }
 
