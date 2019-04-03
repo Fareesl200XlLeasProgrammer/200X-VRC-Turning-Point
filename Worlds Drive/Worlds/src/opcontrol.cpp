@@ -2,29 +2,24 @@
 #include "api.h"
 #include "pros/rtos.h"
 
-/**
- * Runs the operator control code. This function will be started in its own task
- * with the default priority and stack size whenever the robot is enabled via
- * the Field Management System or the VEX Competition Switch in the operator
- * control mode.
- *
- * If no competition control is connected, this function will run immediately
- * following initialize().
- *
- * If the robot is disabled or communications is lost, the
- * operator control task will be stopped. Re-enabling the robot will restart the
- * task, not resume it from where it left off.
- */
-
 
 void doubleShot(void*){
- 	pros::Motor Puncher(6);
+ 	pros::Motor Puncher(6, true);
  	pros::Motor Angler(15);
 	pros::Motor Lift(5);
+  pros::Motor Intake(16, true);
 	pros::ADIAnalogIn AnglePot (2);
-
-
  	pros::Controller master(pros::E_CONTROLLER_MASTER);
+
+  int angleSpeed = 30;//remove this variable later
+  int aAngleSpeed = 10;
+  int yAngleSpeed = 30;
+  int puncherSpeed = 200;
+  int intakeSpeed = 200;
+  int presetIntake = 1000;
+
+  int AngleRead = AnglePot.get_value_calibrated();
+  printf("Angle Potentiometer reading: %d", AngleRead);
 
 	Puncher.set_brake_mode(MOTOR_BRAKE_COAST);
 	Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
@@ -33,160 +28,243 @@ void doubleShot(void*){
 	AnglePot.calibrate();
 
 	while(true){
-    if(Puncher.get_position() == 2100){
+    //REGULAR PRESETS
+ 		if(master.get_digital(DIGITAL_Y)){//middle        IF BROKEN CHANGE TO 105
+ 			while(AnglePot.get_value_calibrated() < 200){
+ 				Angler.move_velocity(yAngleSpeed);
+ 			}
+ 			Angler.move_velocity(0);
+ 			Puncher.tare_position();
+
+      pros::delay(50);
+
+ 			while(Puncher.get_position() < 2100){
+ 				Puncher.move_velocity(puncherSpeed);
+ 			}
+ 			Puncher.move_velocity(0);
+
+ 				while(Angler.get_position() > 0){
+ 					Angler.move_velocity(-yAngleSpeed);
+ 				}
+ 				Angler.move_velocity(0);
+
+        Intake.tare_position();
+        while(Intake.get_position() < presetIntake){
+          Intake.move_velocity(intakeSpeed);
+        }
+        Intake.move_velocity(0);
+
+ 		}
+
+
+		if(master.get_digital(DIGITAL_A)){//top
+ 			while(AnglePot.get_value_calibrated() < 100){//53
+ 				Angler.move_velocity(aAngleSpeed);
+ 			}
+ 			Angler.move_velocity(0);
+ 			Puncher.tare_position();
+
+      pros::delay(50);
+
+ 			while(Puncher.get_position() < 2100){
+ 				Puncher.move_velocity(puncherSpeed);
+ 			}
+ 			Puncher.move_velocity(0);
+
+ 				while(Angler.get_position() > 0){
+ 					Angler.move_velocity(-aAngleSpeed);
+ 				}
+ 				Angler.move_velocity(0);
+
+        Intake.tare_position();
+        while(Intake.get_position() < presetIntake){
+          Intake.move_velocity(intakeSpeed);
+        }
+        Intake.move_velocity(0);
+		}
+
+    if(master.get_digital(DIGITAL_X)){//default
+			Puncher.tare_position();
+			while(Puncher.get_position() < 2100){
+ 				Puncher.move_velocity(puncherSpeed);
+ 			}
+ 			Puncher.move_velocity(0);
+
+      Intake.tare_position();
+      while(Intake.get_position() < presetIntake){
+        Intake.move_velocity(intakeSpeed);
+      }
+      Intake.move_velocity(0);
+ 		}
+
+    //TOP PLATFORM PRESETS
+    if(master.get_digital(DIGITAL_UP)){//top yellow platform
+ 			while(AnglePot.get_value_calibrated() < 110){
+ 				Angler.move_velocity(aAngleSpeed);
+ 			}
+ 			Angler.move_velocity(0);
+ 			Puncher.tare_position();
+
+ 			while(Puncher.get_position() < 2100){
+ 				Puncher.move_velocity(puncherSpeed);
+ 			}
+ 			Puncher.move_velocity(0);
+
+ 				while(Angler.get_position() > 0){
+ 					Angler.move_velocity(-aAngleSpeed);
+ 				}
+ 				Angler.move_velocity(0);
+
+        Intake.tare_position();
+        while(Intake.get_position() < presetIntake){
+          Intake.move_velocity(intakeSpeed);
+        }
+        Intake.move_velocity(0);
+		}
+
+    if(master.get_digital(DIGITAL_DOWN)){// middle yellow platform
+      while(AnglePot.get_value_calibrated() < 210){//105
+        Angler.move_velocity(yAngleSpeed);
+      }
+      Angler.move_velocity(0);
       Puncher.tare_position();
+
+      while(Puncher.get_position() < 2100){
+        Puncher.move_velocity(puncherSpeed);
+      }
+      Puncher.move_velocity(0);
+
+        while(Angler.get_position() > 0){
+          Angler.move_velocity(-yAngleSpeed);
+        }
+        Angler.move_velocity(0);
+
+        Intake.tare_position();
+        while(Intake.get_position() < presetIntake){
+          Intake.move_velocity(intakeSpeed);
+        }
+        Intake.move_velocity(0);
     }
-		if(master.get_digital(DIGITAL_B)){
+
+    //ALLIANCE PLATFORM PRESETS
+    //INSERT ALLIANCE PRESETS HERE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //DOUBLE SHOTS
+    else if(master.get_digital(DIGITAL_LEFT)){// Back Double Shot
+      while(AnglePot.get_value_calibrated() < 97){//
+        Angler.move_velocity(angleSpeed);
+      }
+      Angler.move_velocity(0);
+      Puncher.tare_position();
+
+      while(Puncher.get_position() < 2100){
+        Puncher.move_velocity(puncherSpeed);
+        Intake.move_velocity(-intakeSpeed);
+      }
+      Puncher.move_velocity(0);
+
+        while(Angler.get_position() > 0){
+          Angler.move_velocity(-angleSpeed);
+        }
+        Angler.move_velocity(0);
+
+        Puncher.tare_position();
+
+        while(AnglePot.get_value_calibrated() < 10){//53
+   				Angler.move_velocity(angleSpeed);
+   			}
+   			Angler.move_velocity(0);
+   			Puncher.tare_position();
+
+   			while(Puncher.get_position() < 2100){
+   				Puncher.move_velocity(puncherSpeed);
+   			}
+   			Puncher.move_velocity(0);
+
+   				while(Angler.get_position() > 0){
+   					Angler.move_velocity(-angleSpeed);
+   				}
+   				Angler.move_velocity(0);
+          Intake.move_velocity(0);
+    }
+
+    else if(master.get_digital(DIGITAL_B)){
         while(AnglePot.get_value_calibrated() < 97){// double shot from front
-          Angler.move_velocity(100);
+          Angler.move_velocity(40);
         }
         Angler.move_velocity(0);
         Puncher.tare_position();
 
         while(Puncher.get_position() < 2100){
-          Puncher.move_velocity(100);
+          Puncher.move_velocity(puncherSpeed);
+          Intake.move_velocity(intakeSpeed);
         }
         Puncher.move_velocity(0);
 
           while(Angler.get_position() > 0){
-            Angler.move_velocity(-100);
+            Angler.move_velocity(-angleSpeed);
           }
           Angler.move_velocity(0);
 
           Puncher.tare_position();
 
           while(Puncher.get_position() < 2100){
-            Puncher.move_velocity(200);
+            Puncher.move_velocity(puncherSpeed);
           }
           Puncher.move_velocity(0);
+          Intake.move_velocity(0);
  		}
 
-		//Puncher Preset Top Full Court
- 		else if(master.get_digital(DIGITAL_Y)){//middle        IF BROKEN CHANGE TO 105
- 			while(AnglePot.get_value_calibrated() < 97){
- 				Angler.move_velocity(100);
- 			}
- 			Angler.move_velocity(0);
- 			Puncher.tare_position();
-
- 			while(Puncher.get_position() < 2100){
- 				Puncher.move_velocity(100);
- 			}
- 			Puncher.move_velocity(0);
-
- 				while(Angler.get_position() > 0){
- 					Angler.move_velocity(-100);
- 				}
- 				Angler.move_velocity(0);
-
- 		}
-
-
-
-		else if(master.get_digital(DIGITAL_A)){//top
- 			while(AnglePot.get_value_calibrated() < 30){//53
- 				Angler.move_velocity(70);
- 			}
- 			Angler.move_velocity(0);
- 			Puncher.tare_position();
-
- 			while(Puncher.get_position() < 2100){
- 				Puncher.move_velocity(200);
- 			}
- 			Puncher.move_velocity(0);
-
- 				while(Angler.get_position() > 0){
- 					Angler.move_velocity(-200);
- 				}
- 				Angler.move_velocity(0);
-		}
-
-
-    else if(master.get_digital(DIGITAL_UP)){//top platform
- 			while(AnglePot.get_value_calibrated() < 50){
- 				Angler.move_velocity(70);
- 			}
- 			Angler.move_velocity(0);
- 			Puncher.tare_position();
-
- 			while(Puncher.get_position() < 2100){
- 				Puncher.move_velocity(200);
- 			}
- 			Puncher.move_velocity(0);
-
- 				while(Angler.get_position() > 0){
- 					Angler.move_velocity(-200);
- 				}
- 				Angler.move_velocity(0);
-		}
-
-    else if(master.get_digital(DIGITAL_DOWN)){// middle platform
-      while(AnglePot.get_value_calibrated() < 112){//105
-        Angler.move_velocity(100);
+    if(master.get_digital(DIGITAL_RIGHT)){// TEST
+      while(AnglePot.get_value_calibrated() < 1000){//105
+        Angler.move_velocity(angleSpeed);
       }
       Angler.move_velocity(0);
       Puncher.tare_position();
 
       while(Puncher.get_position() < 2100){
-        Puncher.move_velocity(200);
+        Puncher.move_velocity(puncherSpeed);
       }
       Puncher.move_velocity(0);
 
         while(Angler.get_position() > 0){
-          Angler.move_velocity(-200);
+          Angler.move_velocity(-angleSpeed);
         }
         Angler.move_velocity(0);
     }
 
-    else if(master.get_digital(DIGITAL_LEFT)){// Back Double Shot
-      while(AnglePot.get_value_calibrated() < 97){//
-        Angler.move_velocity(100);
-      }
-      Angler.move_velocity(0);
-      Puncher.tare_position();
-
-      while(Puncher.get_position() < 2100){
-        Puncher.move_velocity(100);
-      }
-      Puncher.move_velocity(0);
-
-        while(Angler.get_position() > 0){
-          Angler.move_velocity(-100);
-        }
-        Angler.move_velocity(0);
-
-        Puncher.tare_position();
-
-        while(AnglePot.get_value_calibrated() < 32){//53
-   				Angler.move_velocity(70);
-   			}
-   			Angler.move_velocity(0);
-   			Puncher.tare_position();
-
-   			while(Puncher.get_position() < 2100){
-   				Puncher.move_velocity(200);
-   			}
-   			Puncher.move_velocity(0);
-
-   				while(Angler.get_position() > 0){
-   					Angler.move_velocity(-200);
-   				}
-   				Angler.move_velocity(0);
-    }
-
-    else if(master.get_digital(DIGITAL_X)){//default
-			Puncher.tare_position();
-			while(Puncher.get_position() < 2100){
- 				Puncher.move_velocity(200);
- 			}
- 			Puncher.move_velocity(0);
- 		}
  		else{
         Puncher.move_velocity(0);
  		}
 	}
-
-
 }
 
 
@@ -196,7 +274,7 @@ void opcontrol() {
  	pros::Motor RightF(20, true);
  	pros::Motor RightB(11, true);
   pros::Motor Intake(16);
- 	pros::Motor Puncher(6);
+ 	pros::Motor Puncher(6, true);
  	pros::Motor Angler(15);
 	pros::Motor Lift(5);
 	pros::ADIAnalogIn AnglePot (2);
@@ -212,12 +290,14 @@ void opcontrol() {
  	Puncher.set_brake_mode(MOTOR_BRAKE_COAST);
  	Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
 	Lift.set_brake_mode(MOTOR_BRAKE_HOLD);
- 	Puncher.set_encoder_units(MOTOR_ENCODER_COUNTS);
+
+  int angleSpeed = 40;
+  int puncherSpeed = 200;
+  int intakeSpeed = 200;
+  int liftSpeed = 200;
 
 	Puncher.tare_position();
-	while(Puncher.get_position() < 50){
-		Puncher.move_velocity(200);
-	}
+	Puncher.move_absolute(800, 200);
 
 	while(true){
 
@@ -240,11 +320,11 @@ void opcontrol() {
 		}
 
 		if(master.get_digital(DIGITAL_R1)){
-			Lift.move_velocity(200);
+			Lift.move_velocity(liftSpeed);
 		}
 
 		else if(master.get_digital(DIGITAL_R2)){
-			Lift.move_velocity(-200);
+			Lift.move_velocity(-liftSpeed);
 		}
 
 		else{
@@ -252,11 +332,11 @@ void opcontrol() {
 		}
 
 	 if(master.get_digital(DIGITAL_L1)){
-		 Intake.move_velocity(200);
+		 Intake.move_velocity(-intakeSpeed);
 	 }
 
 	 else if(master.get_digital(DIGITAL_L2)){
-		 Intake.move_velocity(-200);
+		 Intake.move_velocity(intakeSpeed);
 	 }
 
 	 else{
@@ -264,10 +344,6 @@ void opcontrol() {
 		}
 
 	 pros::delay(20);
- 		int AngleRead = AnglePot.get_value_calibrated();
- 		// printf("Angle Potentiometer reading: %d", AngleRead);
-
- 		//////////////////////////////////////
  	}
 }
 
