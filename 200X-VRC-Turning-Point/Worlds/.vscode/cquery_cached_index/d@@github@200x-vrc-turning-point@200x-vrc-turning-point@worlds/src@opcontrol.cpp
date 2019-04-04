@@ -168,19 +168,42 @@ void opcontrol() {
 
    	while (true) {
 
-      if(master.get_digital(DIGITAL_Y)){
-        while(AnglePot.get_value_calibrated() < 200){
-          Angler.move_velocity(200);
+      Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
+        if(master.get_digital(DIGITAL_X)){
+          Puncher.tare_position();
+          while(Puncher.get_position() < 1800){
+            Puncher.move_velocity(200);
+          }
+          Puncher.move_velocity(0);
         }
-        Angler.move_velocity(0);
-      }
 
-      if(master.get_digital(DIGITAL_A)){
-        while(AnglePot.get_value_calibrated() < 100){
-          Angler.move_velocity(200);
+        if(master.get_digital(DIGITAL_Y)){
+          Puncher.tare_position();
+          while(Puncher.get_position() < 1800){
+            Puncher.move_velocity(200);
+          }
+          Puncher.move_velocity(0);
         }
-        Angler.move_velocity(0);
-      }
+
+        if(master.get_digital(DIGITAL_A)){
+          Puncher.tare_position();
+          while(Puncher.get_position() < 1800){
+            Puncher.move_velocity(200);
+          }
+          Puncher.move_velocity(0);
+        }
+        if(master.get_digital(DIGITAL_B)){
+          Puncher.tare_position();
+
+          while(Puncher.get_position() < 1800){
+            Puncher.move_velocity(200);
+          }
+          Puncher.move_velocity(0);
+        }
+        else{
+          Puncher.move_velocity(0);
+        }
+
 
 
   		if(master.get_digital(DIGITAL_R1)){
