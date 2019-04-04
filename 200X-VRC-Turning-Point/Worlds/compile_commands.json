@@ -195,11 +195,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/opcontrol.cpp.o",
-            "src\\opcontrol.cpp"
+            "bin/functions.cpp.o",
+            "src\\functions.cpp"
         ],
         "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\Worlds",
-        "file": "src\\opcontrol.cpp"
+        "file": "src\\functions.cpp"
     },
     {
         "arguments": [
@@ -230,10 +230,10 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/functions.cpp.o",
-            "src\\functions.cpp"
+            "bin/opcontrol.cpp.o",
+            "src\\opcontrol.cpp"
         ],
         "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\Worlds",
-        "file": "src\\functions.cpp"
+        "file": "src\\opcontrol.cpp"
     }
 ]

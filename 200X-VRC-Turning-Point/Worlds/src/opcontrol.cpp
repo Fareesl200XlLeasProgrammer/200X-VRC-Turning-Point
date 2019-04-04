@@ -199,6 +199,17 @@ void opcontrol() {
             Puncher.move_velocity(200);
           }
           Puncher.move_velocity(0);
+
+          Puncher.tare_position();
+
+          while(AnglePot.get_value_calibrated() < 70){
+            pros::delay(1);
+          }
+
+          while(Puncher.get_position() < 1800){
+            Puncher.move_velocity(200);
+          }
+          Puncher.move_velocity(0);
         }
         else{
           Puncher.move_velocity(0);

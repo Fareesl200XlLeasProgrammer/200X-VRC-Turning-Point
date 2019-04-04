@@ -49,17 +49,23 @@ void puncherTask(void*){//function to reset puncher
       Angler.move_velocity(0);
     }
     if(master.get_digital(DIGITAL_Y)){
-      while(AnglePot.get_value_calibrated() < 100){
+      while(AnglePot.get_value_calibrated() < 70){
         Angler.move_velocity(200);
       }
       Angler.move_velocity(0);
     }
 
-    if(master.get_digital(DIGITAL_A)){
-      while(AnglePot.get_value_calibrated() < 100){
+    if(master.get_digital(DIGITAL_B)){
+
+      while(Puncher.get_position() < 1800){
+        pros::delay(1);
+      }
+      
+      while(AnglePot.get_value_calibrated() < 70){
         Angler.move_velocity(200);
       }
       Angler.move_velocity(0);
+
     }
   }
 
