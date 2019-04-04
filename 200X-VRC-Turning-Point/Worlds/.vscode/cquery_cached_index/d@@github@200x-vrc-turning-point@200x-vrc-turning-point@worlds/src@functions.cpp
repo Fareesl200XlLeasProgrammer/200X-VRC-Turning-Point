@@ -6,69 +6,89 @@
 
 using namespace pros;//just so i dont have to do pros:: before everything
 using namespace okapi;
+void anglePID(double target){
+  // pros::Motor Angler(15);
+  Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
+  // pros::ADIPotentiometer anglePot(2);
+
+  double current;
+  double kP = 3;
+  double kI = 0.0000003;
+  double kD = 1.35;
+  double error;
+  double totalError;
+  double lastError;
+  double pwr;
+
+  do{
+    current = AnglePot.get_value();
+    error = target - current;
+
+    totalError += error;
+    lastError = error;
+
+    double P = kP * error;
+    double I = kI * totalError;
+    double D = kD * (error - lastError);
+
+    pwr = P+I+D;
+    Angler.move_velocity(pwr);
+
+  }while(!(error<= 2 && error>= -2));
+
+  Angler.move_velocity(0);
+
+}
 
 void puncherTask(void*){//function to reset puncher
   Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
-  AnglePot.calibrate();
-
   while(true){
-    printf("Angler: %f\n",AnglePot.get_value_calibrated());
-    if(Puncher.get_position() == 1800){
+    double current = Puncher.get_position();
+    if(master.get_digital(DIGITAL_X)){
       Puncher.tare_position();
-    }
-		if(master.get_digital(DIGITAL_B)){
-
- 		}
-
-		//Puncher Preset Top Full Court
- 		else if(master.get_digital(DIGITAL_Y)){//middle   IF BROKEN CHANGE TO 105
-      Puncher.tare_position();
-      while(AnglePot.get_value_calibrated() < 50){
-        Angler.move_velocity(70);
-      }
-      Angler.move_velocity(0);
-      while(Puncher.get_position() < 1800){
+      while(current < 1800){
         Puncher.move_velocity(200);
       }
       Puncher.move_velocity(0);
+    }
 
-      while(AnglePot.get_value_calibrated() > 0){
-        Angler.move_velocity(-200);
+    if(master.get_digital(DIGITAL_Y)){
+      Puncher.tare_position();
+
+      while(current < 1800){
+        Puncher.move_velocity(200);
       }
-      Angler.move_velocity(0);
-
- 		}
-
-		else if(master.get_digital(DIGITAL_A)){//top
-
-		}
-
-
-    else if(master.get_digital(DIGITAL_UP)){//top platform
-
-		}
-
-    else if(master.get_digital(DIGITAL_DOWN)){// middle platform
-
+      Puncher.move_velocity(0);
     }
 
-    else if(master.get_digital(DIGITAL_LEFT)){// Back Double Shot
+    if(master.get_digital(DIGITAL_A)){
+      Puncher.tare_position();
 
+      while(current < 1800){
+        Puncher.move_velocity(200);
+      }
+      Puncher.move_velocity(0);
     }
 
-    else if(master.get_digital(DIGITAL_X)){//default
-			Puncher.tare_position();
-			while(Puncher.get_position() < 2100){
- 				Puncher.move_velocity(200);
- 			}
- 			Puncher.move_velocity(0);
- 		}
- 		else{
-        Puncher.move_velocity(0);
- 		}
-    pros::delay(20);
-	}
+    if(master.get_digital(DIGITAL_B)){
+      Puncher.tare_position();
+
+      while(current < 1800){
+        Puncher.move_velocity(200);
+      }
+      Puncher.move_velocity(0);
+    }
+    else{
+      Puncher.move_velocity(0);
+    }
+
+
+
+    delay(20);
+  }
 }
+
+
 
 
 extern const lv_img_t six_logo;

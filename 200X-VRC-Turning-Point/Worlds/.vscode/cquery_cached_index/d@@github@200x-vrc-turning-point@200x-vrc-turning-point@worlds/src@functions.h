@@ -14,3 +14,4 @@ static lv_res_t btn_click_action(lv_obj_t * btn1);
 
 void angle_close_mid(void*);
 void punchReset();
+void anglePID(double target);

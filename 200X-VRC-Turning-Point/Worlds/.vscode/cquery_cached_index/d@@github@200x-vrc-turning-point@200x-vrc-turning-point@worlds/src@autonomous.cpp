@@ -66,7 +66,7 @@ void autonomous() {
 
   Intake.move_velocity(-200);
 
-  while(LeftF.get_position() < 1800){
+  while(LeftF.get_position() < 1700){
     LeftF.move_velocity(150);
     LeftB.move_velocity(150);
     RightF.move_velocity(150);
@@ -79,7 +79,7 @@ void autonomous() {
   Intake.move_relative(-900, 200);
   pros::delay(1000);
 
-  while(LeftF.get_position() > 1000){
+  while(LeftF.get_position() > 900){
     LeftF.move_velocity(-150);
     LeftB.move_velocity(-150);
     RightF.move_velocity(-150);
@@ -90,25 +90,25 @@ void autonomous() {
   RightF.move_velocity(0);
   RightB.move_velocity(0);
 
-  PIDTurn(-690);//680
+  PIDTurn(-550);//555
 
-  while(Puncher.get_position() < 2000){
+  while(Puncher.get_position() < 3000){
     Puncher.move_velocity(200);
   }
   Puncher.move_velocity(0);
 
   Lift.move_absolute(-200, 200);
 
-  Intake.move_relative(-2400, 200);
+  Intake.move_relative(-3000, 200);
 
   pros::delay(500);
 
-  while(Angler.get_position() < 120){
+  while(Angler.get_position() < 150){
     Angler.move_velocity(200);
   }
   Angler.move_velocity(0);
 
-  while(Puncher.get_position() < 4000){
+  while(Puncher.get_position() < 6000){
     Puncher.move_velocity(200);
   }
   Puncher.move_velocity(0);
