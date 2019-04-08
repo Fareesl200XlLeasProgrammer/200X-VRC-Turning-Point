@@ -8,7 +8,6 @@
 int AutoCount;
 
 void initialize() {
-	AnglePot.calibrate();
 	Gui();
 }
 
