@@ -49,8 +49,13 @@ void puncherTask(void*){//function to reset puncher
       Angler.move_velocity(0);
     }
     if(master.get_digital(DIGITAL_Y)){
-      while(AnglePot.get_value_calibrated() < 70){
+      while(AnglePot.get_value_calibrated() < 130){
         Angler.move_velocity(200);
+      }
+      Angler.move_velocity(0);
+
+      while(AnglePot.get_value_calibrated() > 130){
+        Angler.move_velocity(-200);
       }
       Angler.move_velocity(0);
     }
@@ -60,13 +65,32 @@ void puncherTask(void*){//function to reset puncher
       while(Puncher.get_position() < 1800){
         pros::delay(1);
       }
-      
-      while(AnglePot.get_value_calibrated() < 70){
+
+      while(AnglePot.get_value_calibrated() < 120){
         Angler.move_velocity(200);
       }
       Angler.move_velocity(0);
-
     }
+
+    if(master.get_digital(DIGITAL_UP)){
+      while(AnglePot.get_value_calibrated() > 5){
+        Angler.move_velocity(-200);
+      }
+      Angler.move_velocity(0);
+
+        while(AnglePot.get_value_calibrated() < 5){
+          Angler.move_velocity(200);
+        }
+        Angler.move_velocity(0);
+    }
+
+    if(master.get_digital(DIGITAL_DOWN)){
+      while(AnglePot.get_value_calibrated() < 160){
+        Angler.move_velocity(200);
+      }
+      Angler.move_velocity(0);
+    }
+
   }
 
     delay(20);

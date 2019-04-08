@@ -10,7 +10,7 @@ using namespace pros;
 void PIDTurn(double target){
   pros::Motor Intake(16);
 	pros::Motor Lift(5);
-	 pros::ADIAnalogIn IntakeLine_Top1 (3);
+  pros::ADIAnalogIn IntakeLine_Top1 (3);
   pros::ADIGyro gyro (4);
   pros::Motor LeftF(10);
   pros::Motor LeftB(1);
@@ -18,11 +18,10 @@ void PIDTurn(double target){
   pros::Motor RightB(11, true);
 
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-  gyro.reset();
 
-  double kP = 0.2;
+  double kP = 0.3;
   double kI = 0.00000003;
-  double kD = 1.35; /*was 1.35 test with current value if improvement is seen keep value*/
+  double kD = 20; /*was 1.35 test with current value if improvement is seen keep value*/
   double error;
   double totalError;
   double lastError;
@@ -48,7 +47,7 @@ void PIDTurn(double target){
     if(error<= 1 && error>= -1){
       break;
     }
-  } while(!(error<= 1 && error>= -1));
+  } while(!(error<= 5 && error>= -2));
 
   LeftF.move_velocity(0);
   LeftB.move_velocity(0);
@@ -56,17 +55,22 @@ void PIDTurn(double target){
   RightB.move_velocity(0);
 }
 void autonomous() {
+  gyro.reset();
+
   Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
   AnglePot.calibrate();
   Angler.tare_position();
+  Puncher.tare_position();
 
   LeftF.tare_position();
 
-  Lift.move_absolute(-400, 200);
+  Lift.move_absolute(-300, 200);
 
-  Intake.move_velocity(-200);
+  Puncher.move_absolute(900, 200);
 
-  while(LeftF.get_position() < 1700){
+  Intake.move_velocity(200);
+
+  while(LeftF.get_position() < 1500){
     LeftF.move_velocity(150);
     LeftB.move_velocity(150);
     RightF.move_velocity(150);
@@ -76,10 +80,14 @@ void autonomous() {
   LeftB.move_velocity(0);
   RightF.move_velocity(0);
   RightB.move_velocity(0);
-  Intake.move_relative(-900, 200);
-  pros::delay(1000);
+  pros::delay(200);
 
-  while(LeftF.get_position() > 900){
+  while(IntakeLine_Top1.get_value() > 2848){
+    Intake.move_velocity(200);
+  }
+  Intake.move_velocity(0);
+
+  while(LeftF.get_position() > 800){
     LeftF.move_velocity(-150);
     LeftB.move_velocity(-150);
     RightF.move_velocity(-150);
@@ -89,29 +97,114 @@ void autonomous() {
   LeftB.move_velocity(0);
   RightF.move_velocity(0);
   RightB.move_velocity(0);
+  pros::delay(20);
 
-  PIDTurn(-550);//555
+  PIDTurn(-400);
 
-  while(Puncher.get_position() < 3000){
+  while(Puncher.get_position() < 2200){
     Puncher.move_velocity(200);
   }
   Puncher.move_velocity(0);
 
   Lift.move_absolute(-200, 200);
 
-  Intake.move_relative(-3000, 200);
+  Intake.move_relative(3000, 200);
 
-  pros::delay(500);
+  Puncher.tare_position();
 
-  while(Angler.get_position() < 150){
+  while(AnglePot.get_value_calibrated() < 140){
     Angler.move_velocity(200);
   }
   Angler.move_velocity(0);
 
-  while(Puncher.get_position() < 6000){
+  while(Puncher.get_position() < 2200){
     Puncher.move_velocity(200);
   }
   Puncher.move_velocity(0);
+
+  PIDTurn(-447);//Useless but this is just to adjust to scrape (Doesnt work)
+
+  Lift.move_relative(-400, 200);
+
+  while(LeftF.get_position() < 800){
+    LeftF.move_velocity(50);
+    LeftB.move_velocity(50);
+    RightF.move_velocity(50);
+    RightB.move_velocity(50);
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+  pros::delay(200);
+
+  while(LeftF.get_position() < 1000){
+    LeftF.move_velocity(20);
+    LeftB.move_velocity(20);
+    RightF.move_velocity(20);
+    RightB.move_velocity(20);
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+  Lift.move_relative(600, 95);
+  Intake.move_velocity(200);
+  pros::delay(300);
+
+  while(LeftF.get_position() > 800){
+    LeftF.move_velocity(-120);
+    LeftB.move_velocity(-120);
+    RightF.move_velocity(-120);
+    RightB.move_velocity(-120);
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+  Lift.move_absolute(-200, 200);
+
+  while(LeftF.get_position() < 1000){
+    LeftF.move_velocity(200);
+    LeftB.move_velocity(200);
+    RightF.move_velocity(200);
+    RightB.move_velocity(200);
+
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+
+  while(IntakeLine_Top1.get_value() > 2848){
+    Intake.move_velocity(200);
+  }
+  Intake.move_velocity(0);
+
+  while(LeftF.get_position() > 600){
+    LeftF.move_velocity(-120);
+    LeftB.move_velocity(-120);
+    RightF.move_velocity(-120);
+    RightB.move_velocity(-120);
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+
+  PIDTurn(-900);
+
+  while(LeftF.get_position() > 300){
+    LeftF.move_velocity(-120);
+    LeftB.move_velocity(-120);
+    RightF.move_velocity(-120);
+    RightB.move_velocity(-120);
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+
 
 
 
