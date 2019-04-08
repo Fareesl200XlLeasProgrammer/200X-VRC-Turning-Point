@@ -41,63 +41,81 @@ void anglePID(double target){
 }
 
 void puncherTask(void*){//function to reset puncher
+  int button = 0;
+
   while(true){
     if(master.get_digital(DIGITAL_X)){
+      button = 0;
       while(AnglePot.get_value_calibrated() > 0){
         Angler.move_velocity(-200);
       }
       Angler.move_velocity(0);
     }
-    if(master.get_digital(DIGITAL_Y)){
-      while(AnglePot.get_value_calibrated() < 130){
-        Angler.move_velocity(200);
-      }
-      Angler.move_velocity(0);
+    if(master.get_digital(DIGITAL_Y) && button == 3){
+      button = 2;
 
-      while(AnglePot.get_value_calibrated() > 130){
+      while(AnglePot.get_value_calibrated() > 100){
         Angler.move_velocity(-200);
       }
       Angler.move_velocity(0);
     }
+    else if(master.get_digital(DIGITAL_Y) && button < 3){
+      button = 2;
+      while(AnglePot.get_value_calibrated() < 100){//120
+        Angler.move_velocity(200);
+      }
+      Angler.move_velocity(0);
+    }
 
-    if(master.get_digital(DIGITAL_B)){
+    if(master.get_digital(DIGITAL_A)){
 
-      while(Puncher.get_position() < 1800){
+      button = 2;
+      while(Puncher.get_position() < 1850){
         pros::delay(1);
       }
-
       while(AnglePot.get_value_calibrated() < 120){
         Angler.move_velocity(200);
       }
       Angler.move_velocity(0);
-    }
 
-    if(master.get_digital(DIGITAL_UP)){
-      while(AnglePot.get_value_calibrated() > 5){
+      while(Puncher.get_position() < 1850){
+        pros::delay(1);
+      }
+      while(AnglePot.get_value_calibrated() > 0){
         Angler.move_velocity(-200);
       }
       Angler.move_velocity(0);
 
-        while(AnglePot.get_value_calibrated() < 5){
-          Angler.move_velocity(200);
-        }
-        Angler.move_velocity(0);
+  }
+
+    if(master.get_digital(DIGITAL_UP) && button < 1){
+      button = 1;
+      while(AnglePot.get_value_calibrated() < 20){
+        Angler.move_velocity(200);
+      }
+      Angler.move_velocity(0);
     }
 
+    if(master.get_digital(DIGITAL_UP) && button > 1){
+      button = 1;
+    while(AnglePot.get_value_calibrated() > 20){
+      Angler.move_velocity(-200);
+  }
+  Angler.move_velocity(0);
+}
+
+
     if(master.get_digital(DIGITAL_DOWN)){
+      button = 3;
       while(AnglePot.get_value_calibrated() < 160){
         Angler.move_velocity(200);
       }
       Angler.move_velocity(0);
     }
-
   }
 
-    delay(20);
+    pros::delay(20);
 }
-
-
-
 
 
 extern const lv_img_t six_logo;
