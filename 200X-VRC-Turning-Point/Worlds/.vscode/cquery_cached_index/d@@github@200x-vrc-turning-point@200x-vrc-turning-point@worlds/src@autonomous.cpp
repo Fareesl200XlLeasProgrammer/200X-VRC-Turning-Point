@@ -9,7 +9,7 @@ using namespace okapi;
 using namespace pros;
 void PIDTurn(double target){
   pros::Motor Intake(16);
-	pros::Motor Lift(5);
+  pros::Motor Lift(5);
   pros::ADIAnalogIn IntakeLine_Top1 (3);
   pros::ADIGyro gyro (4);
   pros::Motor LeftF(10);
@@ -17,7 +17,7 @@ void PIDTurn(double target){
   pros::Motor RightF(20, true);
   pros::Motor RightB(11, true);
 
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
+  pros::Controller master(pros::E_CONTROLLER_MASTER);
 
   double kP = 0.3;
   double kI = 0.00000003;
@@ -44,7 +44,7 @@ void PIDTurn(double target){
       I = 0;
     }
 
-    if(error<= 1 && error>= -1){
+    if(error<= 5 && error>= -5){
       break;
     }
   } while(!(error<= 5 && error>= -2));
@@ -61,6 +61,7 @@ void autonomous() {
   AnglePot.calibrate();
   Angler.tare_position();
   Puncher.tare_position();
+  AnglePot.calibrate();
 
   LeftF.tare_position();
 
@@ -82,7 +83,7 @@ void autonomous() {
   RightB.move_velocity(0);
   pros::delay(200);
 
-  while(IntakeLine_Top1.get_value() > 2848){
+  while(IntakeLine_Top1.get_value() > 2828){
     Intake.move_velocity(200);
   }
   Intake.move_velocity(0);
@@ -99,7 +100,7 @@ void autonomous() {
   RightB.move_velocity(0);
   pros::delay(20);
 
-  PIDTurn(-400);
+  PIDTurn(-480);
 
   while(Puncher.get_position() < 2200){
     Puncher.move_velocity(200);
@@ -112,7 +113,7 @@ void autonomous() {
 
   Puncher.tare_position();
 
-  while(AnglePot.get_value_calibrated() < 140){
+  while(AnglePot.get_value_calibrated() < 100){
     Angler.move_velocity(200);
   }
   Angler.move_velocity(0);
@@ -122,7 +123,7 @@ void autonomous() {
   }
   Puncher.move_velocity(0);
 
-  PIDTurn(-447);//Useless but this is just to adjust to scrape (Doesnt work)
+  PIDTurn(-490);//Useless but this is just to adjust to scrape (Doesnt work)
 
   Lift.move_relative(-400, 200);
 

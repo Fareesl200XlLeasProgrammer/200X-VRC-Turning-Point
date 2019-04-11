@@ -4,6 +4,7 @@ void opcontrol() {
 	//Motor Definitions
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
+<<<<<<< HEAD
 	pros::Motor Right(11, false);
 
 	pros::Motor Right2(13, false);
@@ -11,15 +12,27 @@ void opcontrol() {
 	pros::Motor Left(14);
 
 	pros::Motor Left2(12);
+=======
+	pros::Motor RightB(14);
 
-	pros::Motor Flipper(20);
+	pros::Motor RightF(12);
 
-	pros::Motor Intake(7, false);
+	pros::Motor LeftF(13);
 
-	pros::Motor Lift(8);
+	pros::Motor LeftB(11);
+>>>>>>> 219f41308445720d38fd4e222386c98be5e30591
 
+	pros::Motor Intake(17);
+
+	pros::Motor Lift(19);
+
+	pros::Motor Flywheel(16);
+
+<<<<<<< HEAD
 	pros::Motor Flywheel(10);
 
+=======
+>>>>>>> 219f41308445720d38fd4e222386c98be5e30591
 	pros::Motor Index(18);
 
 	// Gui();//Run the gui
@@ -28,22 +41,20 @@ void opcontrol() {
 	Lift.set_brake_mode(MOTOR_BRAKE_HOLD);
 
 	//Setting Encoder Units for the Flipper
-	Flipper.set_encoder_units(MOTOR_ENCODER_ROTATIONS);
-
 	while (true) {
 		Flywheel.move_velocity(135);
 
     //Drive Code
-    Right.move(master.get_analog(ANALOG_RIGHT_X)*0.8 - master.get_analog(ANALOG_LEFT_Y));
-    Right2.move(master.get_analog(ANALOG_RIGHT_X)*0.8 - master.get_analog(ANALOG_LEFT_Y));
-    Left.move(master.get_analog(ANALOG_RIGHT_X)*0.8 + master.get_analog(ANALOG_LEFT_Y));
-    Left2.move(master.get_analog(ANALOG_RIGHT_X)*0.8 + master.get_analog(ANALOG_LEFT_Y));
+    RightF.move(master.get_analog(ANALOG_RIGHT_X)*0.8 + master.get_analog(ANALOG_LEFT_Y));
+    RightB.move(master.get_analog(ANALOG_RIGHT_X)*0.8 + master.get_analog(ANALOG_LEFT_Y));
+    LeftF.move(master.get_analog(ANALOG_RIGHT_X)*0.8 - master.get_analog(ANALOG_LEFT_Y));
+    LeftB.move(master.get_analog(ANALOG_RIGHT_X)*0.8 - master.get_analog(ANALOG_LEFT_Y));
 
 		if(master.get_analog(ANALOG_LEFT_Y) < 15 && master.get_analog(ANALOG_LEFT_Y) >-15){
-			Right.set_brake_mode(MOTOR_BRAKE_HOLD);
-			Right2.set_brake_mode(MOTOR_BRAKE_HOLD);
-			Left.set_brake_mode(MOTOR_BRAKE_HOLD);
-			Left2.set_brake_mode(MOTOR_BRAKE_HOLD);
+			RightF.set_brake_mode(MOTOR_BRAKE_HOLD);
+			RightB.set_brake_mode(MOTOR_BRAKE_HOLD);
+			LeftF.set_brake_mode(MOTOR_BRAKE_HOLD);
+			LeftB.set_brake_mode(MOTOR_BRAKE_HOLD);
 		}
 
     //Lift Code

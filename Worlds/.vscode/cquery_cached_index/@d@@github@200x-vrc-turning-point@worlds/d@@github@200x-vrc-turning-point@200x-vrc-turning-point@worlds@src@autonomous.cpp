@@ -3,97 +3,209 @@
 #include "functions.h"
 #include "Autos.h"
 #include "AutoVars.cpp"
+#include "motorDefs.h"
 
 using namespace okapi;
 using namespace pros;
-/**
- * Runs the user autonomous code. This function will be started in its own task
- * with the default priority and stack size whenever the robot is enabled via
- * the Field Management System or the VEX Competition Switch in the autonomous
- * mode. Alternatively, this function may be called in initialize or opcontrol
- * for non-competition testing purposes.
- *
- * If the robot is disabled or communications is lost, the autonomous task
- * will be stopped. Re-enabling the robot will restart the task, not re-start it
- * from where it left off.
- */
-
-
-void autonomous() {
-  pros::Motor Puncher(6);
-  pros::Motor Angler(15);
+void PIDTurn(double target){
   pros::Motor Intake(16);
 	pros::Motor Lift(5);
+  pros::ADIAnalogIn IntakeLine_Top1 (3);
+  pros::ADIGyro gyro (4);
+  pros::Motor LeftF(10);
+  pros::Motor LeftB(1);
+  pros::Motor RightF(20, true);
+  pros::Motor RightB(11, true);
 
-  auto myChassis = ChassisControllerFactory::create(
-    {1, 10}, // Left motors
-    {-20, -11},   // Right motors
-    AbstractMotor::gearset::red, // Torque gearset
-    {12_in, 18.5_in} // 4 inch wheels, 12.5 inch wheelbase width
-  );
+	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-  auto profileController = AsyncControllerFactory::motionProfile(
+  double kP = 0.3;
+  double kI = 0.00000003;
+  double kD = 20; /*was 1.35 test with current value if improvement is seen keep value*/
+  double error;
+  double totalError;
+  double lastError;
+  double pwr;
+  do{
 
-    1.0,  // Maximum linear velocity of the Chassis in m/s
-    2.0,  // Maximum linear acceleration of the Chassis in m/s/s
-    10.0, // Maximum linear jerk of the Chassis in m/s/s/s
-    myChassis // Chassis Controller
-  );
-  // if(AutoCount == 1){
-  //   /** Call Auto Function*/
-  // }
-  //
-  // if(AutoCount == 2){
-  //   /** Call Auto Function*/
-  // }
-  //
-  // if(AutoCount == 3){
-  //   /** Call Auto Function*/
-  // }
-  //
-  // if(AutoCount == 3){
-  //   /** Call Auto Function*/
-  // }
-  //
-  // if(AutoCount == 5){
-  //   /** Call Auto Function*/
-  // }
+    double current = gyro.get_value();
+    error = target - current;
+    double P = error * kP;
+    totalError += error;
+    lastError = error;
+    double I = kI * totalError;
+    double D = kD * (error - lastError);
+    pwr = P+I+D;
+    LeftF.move_velocity(pwr);
+    LeftB.move_velocity(pwr);
+    RightF.move_velocity(-pwr);
+    RightB.move_velocity(-pwr);
+    if(error ==0){
+      I = 0;
+    }
 
-  profileController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{4_ft, 0_ft, 0_deg}}, "firstCap");
-  profileController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{5_ft, 0_ft, 0_deg}}, "firstCapBack");
-  profileController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{1_ft, 0_ft, 0_deg}}, "firstCapadjust");
-  profileController.generatePath({Point{0_ft, 0_ft, 0_deg}, Point{1_ft, 0_ft, 0_deg}}, "shootAdjust");
+    if(error<= 1 && error>= -1){
+      break;
+    }
+  } while(!(error<= 5 && error>= -2));
 
-  profileController.setTarget("firstCap");
-  Lift.move_absolute(-400, 200);
-  Intake.move_velocity(-200);
-  Puncher.move_absolute(600, 200);
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+}
+void autonomous() {
+  gyro.reset();
 
-  profileController.waitUntilSettled();
-  profileController.setTarget("firstCapBack",true);
-  Intake.move_velocity(0);
-  profileController.waitUntilSettled();
-  profileController.setTarget("firstCapadjust");
-  profileController.waitUntilSettled();
-  myChassis.turnAngle(105.87346536453_deg);
-  profileController.setTarget("shootAdjust",true);
-  profileController.waitUntilSettled();
-  while(Puncher.get_position() < 2000){
-    Puncher.move_velocity(200);
-  }
-  Puncher.move_velocity(0);
-  Puncher.move_velocity(0);
-  Intake.move_velocity(-200);
-  Angler.move_absolute(160, 200);
-  pros::delay(500);
+  Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
+  AnglePot.calibrate();
+  Angler.tare_position();
   Puncher.tare_position();
-  while(Puncher.get_position() < 2000){
+  AnglePot.calibrate();
+
+  LeftF.tare_position();
+
+  Lift.move_absolute(-300, 200);
+
+  Puncher.move_absolute(900, 200);
+
+  Intake.move_velocity(200);
+
+  while(LeftF.get_position() < 1500){
+    LeftF.move_velocity(150);
+    LeftB.move_velocity(150);
+    RightF.move_velocity(150);
+    RightB.move_velocity(150);
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+  pros::delay(200);
+
+  while(IntakeLine_Top1.get_value() > 2828){
+    Intake.move_velocity(200);
+  }
+  Intake.move_velocity(0);
+
+  while(LeftF.get_position() > 800){
+    LeftF.move_velocity(-150);
+    LeftB.move_velocity(-150);
+    RightF.move_velocity(-150);
+    RightB.move_velocity(-150);
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+  pros::delay(20);
+
+  PIDTurn(-480);
+
+  while(Puncher.get_position() < 2200){
     Puncher.move_velocity(200);
   }
   Puncher.move_velocity(0);
 
+  Lift.move_absolute(-200, 200);
 
-  // Puncher.move_absolute(1200, 200);
+  Intake.move_relative(3000, 200);
+
+  Puncher.tare_position();
+
+  while(AnglePot.get_value_calibrated() < 100){
+    Angler.move_velocity(200);
+  }
+  Angler.move_velocity(0);
+
+  while(Puncher.get_position() < 2200){
+    Puncher.move_velocity(200);
+  }
+  Puncher.move_velocity(0);
+
+  PIDTurn(-490);//Useless but this is just to adjust to scrape (Doesnt work)
+
+  Lift.move_relative(-400, 200);
+
+  while(LeftF.get_position() < 800){
+    LeftF.move_velocity(50);
+    LeftB.move_velocity(50);
+    RightF.move_velocity(50);
+    RightB.move_velocity(50);
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+  pros::delay(200);
+
+  while(LeftF.get_position() < 1000){
+    LeftF.move_velocity(20);
+    LeftB.move_velocity(20);
+    RightF.move_velocity(20);
+    RightB.move_velocity(20);
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+  Lift.move_relative(600, 95);
+  Intake.move_velocity(200);
+  pros::delay(300);
+
+  while(LeftF.get_position() > 800){
+    LeftF.move_velocity(-120);
+    LeftB.move_velocity(-120);
+    RightF.move_velocity(-120);
+    RightB.move_velocity(-120);
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+  Lift.move_absolute(-200, 200);
+
+  while(LeftF.get_position() < 1000){
+    LeftF.move_velocity(200);
+    LeftB.move_velocity(200);
+    RightF.move_velocity(200);
+    RightB.move_velocity(200);
+
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+
+  while(IntakeLine_Top1.get_value() > 2848){
+    Intake.move_velocity(200);
+  }
+  Intake.move_velocity(0);
+
+  while(LeftF.get_position() > 600){
+    LeftF.move_velocity(-120);
+    LeftB.move_velocity(-120);
+    RightF.move_velocity(-120);
+    RightB.move_velocity(-120);
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+
+  PIDTurn(-900);
+
+  while(LeftF.get_position() > 300){
+    LeftF.move_velocity(-120);
+    LeftB.move_velocity(-120);
+    RightF.move_velocity(-120);
+    RightB.move_velocity(-120);
+  }
+  LeftF.move_velocity(0);
+  LeftB.move_velocity(0);
+  RightF.move_velocity(0);
+  RightB.move_velocity(0);
+
 
 
 

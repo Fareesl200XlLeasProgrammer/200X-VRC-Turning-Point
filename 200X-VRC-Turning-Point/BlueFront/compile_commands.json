@@ -8,12 +8,12 @@
             "-fno-ms-extensions",
             "-fno-ms-compatibility",
             "-fno-delayed-template-parsing",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
             "-iquote./include",
             "-iquote./include/./",
             "-mcpu=cortex-a9",
@@ -31,7 +31,11 @@
             "bin/autonomous.cpp.o",
             "src\\autonomous.cpp"
         ],
+<<<<<<< HEAD
         "directory": "D:\\Robotics\\Worlds\\GitHub\\Fixed Repo\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\BlueFront",
+=======
+        "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\BlueFront",
+>>>>>>> 219f41308445720d38fd4e222386c98be5e30591
         "file": "src\\autonomous.cpp"
     },
     {
@@ -43,12 +47,12 @@
             "-fno-ms-extensions",
             "-fno-ms-compatibility",
             "-fno-delayed-template-parsing",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
             "-iquote./include",
             "-iquote./include/./",
             "-mcpu=cortex-a9",
@@ -66,7 +70,11 @@
             "bin/initialize.cpp.o",
             "src\\initialize.cpp"
         ],
+<<<<<<< HEAD
         "directory": "D:\\Robotics\\Worlds\\GitHub\\Fixed Repo\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\BlueFront",
+=======
+        "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\BlueFront",
+>>>>>>> 219f41308445720d38fd4e222386c98be5e30591
         "file": "src\\initialize.cpp"
     },
     {
@@ -78,12 +86,12 @@
             "-fno-ms-extensions",
             "-fno-ms-compatibility",
             "-fno-delayed-template-parsing",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
-            "-isystemc:\\program files\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include/c++/7.2.1/backward",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/include-fixed",
+            "-isystemd:\\pros\\toolchain\\usr\\bin\\../lib/gcc/arm-none-eabi/7.2.1/../../../../arm-none-eabi/include",
             "-iquote./include",
             "-iquote./include/./",
             "-mcpu=cortex-a9",
@@ -101,7 +109,11 @@
             "bin/opcontrol.cpp.o",
             "src\\opcontrol.cpp"
         ],
+<<<<<<< HEAD
         "directory": "D:\\Robotics\\Worlds\\GitHub\\Fixed Repo\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\BlueFront",
+=======
+        "directory": "D:\\GitHub\\200X-VRC-Turning-Point\\200X-VRC-Turning-Point\\BlueFront",
+>>>>>>> 219f41308445720d38fd4e222386c98be5e30591
         "file": "src\\opcontrol.cpp"
     }
 ]
