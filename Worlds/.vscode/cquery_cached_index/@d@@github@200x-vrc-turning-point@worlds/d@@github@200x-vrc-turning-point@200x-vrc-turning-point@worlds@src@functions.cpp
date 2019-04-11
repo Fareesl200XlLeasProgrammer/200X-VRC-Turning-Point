@@ -2,51 +2,115 @@
 #include "api.h"
 #include "pros/rtos.h"
 #include "functions.h"
+#include "motorDefs.h"
 
 using namespace pros;//just so i dont have to do pros:: before everything
+using namespace okapi;
+void anglePID(double target){
+  // pros::Motor Angler(15);
+  Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
+  // pros::ADIPotentiometer anglePot(2);
 
-void punchReset(){//function to reset puncher
-  pros::Motor Puncher(6);
-  Puncher.tare_position();
-  Puncher.set_brake_mode(MOTOR_BRAKE_COAST);
-  while(Puncher.get_position() < 1200){
-    Puncher.move_velocity(200);
-  }
-  Puncher.move_velocity(0);
+  double current;
+  double kP = 3;
+  double kI = 0.0000003;
+  double kD = 1.35;
+  double error;
+  double totalError;
+  double lastError;
+  double pwr;
+
+  do{
+    current = AnglePot.get_value();
+    error = target - current;
+
+    totalError += error;
+    lastError = error;
+
+    double P = kP * error;
+    double I = kI * totalError;
+    double D = kD * (error - lastError);
+
+    pwr = P+I+D;
+    Angler.move_velocity(pwr);
+
+  }while(!(error<= 2 && error>= -2));
+
+  Angler.move_velocity(0);
+
 }
 
-
-
-void angle_close_mid(void*){
-  pros::Motor Angler(15);
-  pros::Motor Puncher(6);
-  pros::Controller master(pros::E_CONTROLLER_MASTER);
-
-  Angler.tare_position();
-  Angler.set_zero_position(0);
-
+void Shoot(void*){
   while(true){
-    if(master.get_digital(DIGITAL_Y)){//DONT TOUCH THIS YOU DUMB FUCK
-      Angler.tare_position();
-      Angler.move_absolute(160, 200);
-      punchReset();
-      Angler.move_absolute(0, 200);
-      delay(20);
+    while(Puncher.get_position() < 1800){
+      Puncher.move_velocity(200);
     }
+    Puncher.move_velocity(0);
+    pros::delay(20);
+  }
+}
+
+void puncherTask(void*){//function to reset puncher
+  pros::Task shootTask(Shoot, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
+  while(true){
 
     if(master.get_digital(DIGITAL_X)){
       Angler.move_absolute(0, 200);
-      punchReset();
+      Puncher.tare_position();
     }
 
     if(master.get_digital(DIGITAL_A)){
-      Angler.move_absolute(90, 200);
-      punchReset();
+      Angler.move_absolute(0, 200);
+      Puncher.tare_position();
+      while(Puncher.get_position() < 1800){
+        pros::delay(1);
+      }
+      Puncher.tare_position();
+      while(AnglePot.get_value_calibrated() < 120){
+        Angler.move_velocity(200);
+      }
+      Angler.move_velocity(0);
+      while(Puncher.get_position() < 1800){
+        pros::delay(1);
+      }
       Angler.move_absolute(0, 200);
     }
-    delay(20);
+
+    if(master.get_digital(DIGITAL_Y)){
+      Puncher.tare_position();
+      while(AnglePot.get_value_calibrated() < 120){
+        Angler.move_velocity(200);
+      }
+      Angler.move_velocity(0);
+      while(Puncher.get_position() < 1800){pros::delay(1);}
+      Angler.move_absolute(0, 200);
+    }
+
+    if(master.get_digital(DIGITAL_UP) ){
+      while(AnglePot.get_value_calibrated() < 20){
+        Angler.move_velocity(200);
+      }
+      Angler.move_velocity(0);
+    }
+
+    if(master.get_digital(DIGITAL_UP)){
+    while(AnglePot.get_value_calibrated() > 20){
+      Angler.move_velocity(-200);
+  }
+  Angler.move_velocity(0);
+}
+
+
+    if(master.get_digital(DIGITAL_DOWN)){
+      while(AnglePot.get_value_calibrated() < 160){
+        Angler.move_velocity(200);
+      }
+      Angler.move_velocity(0);
+    }
+    pros::delay(20);
   }
 }
+
 
 extern const lv_img_t six_logo;
 extern const lv_img_t lance;
@@ -154,22 +218,13 @@ void Gui(){
 }
 
 void Drive(void*){
-  pros::Motor LeftF(10);
-  pros::Motor LeftB(1);
-  pros::Motor RightF(20, true);
-  pros::Motor RightB(11, true);
-  pros::Motor Puncher(6);
-
-  Puncher.tare_position();
-
-  pros::Controller master(pros::E_CONTROLLER_MASTER);
-
   RightF.set_brake_mode(MOTOR_BRAKE_HOLD);
   RightB.set_brake_mode(MOTOR_BRAKE_HOLD);
   LeftF.set_brake_mode(MOTOR_BRAKE_HOLD);
   LeftB.set_brake_mode(MOTOR_BRAKE_HOLD);
+  Puncher.set_encoder_units(MOTOR_ENCODER_COUNTS);
+
   while(true){
-    // Gui();
     if(master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_LEFT_X) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0){
 			LeftF.move_velocity(0);
 			LeftB.move_velocity(0);
@@ -182,6 +237,18 @@ void Drive(void*){
 			RightF.move(master.get_analog(ANALOG_LEFT_Y) - master.get_analog(ANALOG_RIGHT_X) - master.get_analog(ANALOG_LEFT_X));
 			RightB.move(master.get_analog(ANALOG_LEFT_Y) - master.get_analog(ANALOG_RIGHT_X) + master.get_analog(ANALOG_LEFT_X));
 		}
+
+    if(master.get_digital(DIGITAL_L1)){
+    Intake.move_velocity(-200);
+    }
+
+    else if(master.get_digital(DIGITAL_L2)){
+    Intake.move_velocity(200);
+    }
+    else{
+    Intake.move_velocity(0);
+    }
+
     delay(20);
   }
 

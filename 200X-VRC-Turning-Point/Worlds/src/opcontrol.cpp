@@ -6,8 +6,8 @@
 
 void PIDTurnDrive(double target){
   // pros::Motor Intake(16);
-	// pros::Motor Lift(5);
-	// pros::ADIAnalogIn IntakeLine_Top1 (3);
+  // pros::Motor Lift(5);
+  // pros::ADIAnalogIn IntakeLine_Top1 (3);
   // pros::ADIGyro gyro (4);
   //
   // pros::Motor LeftF(10);
@@ -15,8 +15,8 @@ void PIDTurnDrive(double target){
   // pros::Motor RightF(20, true);
   // pros::Motor RightB(11, true);
   //
-	// pros::Controller master(pros::E_CONTROLLER_MASTER);
-  gyro.reset();
+  // pros::Controller master(pros::E_CONTROLLER_MASTER);
+  // gyro.reset();
 
   double kP = 0.3;
   double kI = 0.00000003;
@@ -130,145 +130,43 @@ void PIDTurnDrive(double target){
 
 void opcontrol() {
 
- 	RightF.set_brake_mode(MOTOR_BRAKE_HOLD);
- 	RightB.set_brake_mode(MOTOR_BRAKE_HOLD);
- 	LeftF.set_brake_mode(MOTOR_BRAKE_HOLD);
- 	LeftB.set_brake_mode(MOTOR_BRAKE_HOLD);
- 	Intake.set_brake_mode(MOTOR_BRAKE_HOLD);
- 	Puncher.set_brake_mode(MOTOR_BRAKE_COAST);
- 	Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
-	Lift.set_brake_mode(MOTOR_BRAKE_HOLD);
+  RightF.set_brake_mode(MOTOR_BRAKE_HOLD);
+  RightB.set_brake_mode(MOTOR_BRAKE_HOLD);
+  LeftF.set_brake_mode(MOTOR_BRAKE_HOLD);
+  LeftB.set_brake_mode(MOTOR_BRAKE_HOLD);
+  Intake.set_brake_mode(MOTOR_BRAKE_HOLD);
+  Puncher.set_brake_mode(MOTOR_BRAKE_COAST);
+  Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
+  Lift.set_brake_mode(MOTOR_BRAKE_HOLD);
 
-	Puncher.tare_position();
-	Puncher.move_absolute(800, 200);
-
-  if(Puncher.get_position() < 900){
-    while(Puncher.get_position() < 900){
-      Puncher.move_velocity(200);
-    }
-
-    Puncher.move_velocity(0);
+  Puncher.tare_position();
+  while(Puncher.get_position() < 900){
+    Puncher.move_velocity(200);
   }
+  Puncher.move_velocity(0);
+
   pros::Task Drive_task(Drive, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
   pros::Task punchTask(puncherTask, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
+
 
   while(true){
     AnglePot.calibrate();
 
-    while (true) {
+    Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
 
-      Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
-        if(master.get_digital(DIGITAL_X)){
-          Puncher.tare_position();
-          while(Puncher.get_position() < 1850){
-            Puncher.move_velocity(200);
-          }
-          Puncher.move_velocity(0);
 
-          Intake.tare_position();
-          while(Intake.get_position() < 1000){
-            Intake.move_velocity(200);
-          }
-          Intake.move_velocity(0);
-        }
-
-        if(master.get_digital(DIGITAL_Y)){
-          Puncher.tare_position();
-          while(Puncher.get_position() < 1850){
-            Puncher.move_velocity(200);
-          }
-          Puncher.move_velocity(0);
-
-          Intake.tare_position();
-          while(Intake.get_position() < 1000){
-            Intake.move_velocity(200);
-          }
-          Intake.move_velocity(0);
-        }
-
-        if(master.get_digital(DIGITAL_B)){
-          gyro.reset();
-          PIDTurnDrive(250);
-        }
-        if(master.get_digital(DIGITAL_A)){
-          Puncher.tare_position();
-
-          while(Puncher.get_position() < 1850){
-            Puncher.move_velocity(200);
-          }
-          Puncher.move_velocity(0);
-
-          Puncher.tare_position();
-
-          // while(AnglePot.get_value_calibrated() < 120){
-          //   pros::delay(1);
-          // }
-          while(AnglePot.get_value_calibrated() < 120){
-            pros::delay(1);
-          }
-
-          while(Puncher.get_position() < 1850){
-            Puncher.move_velocity(200);
-          }
-          Puncher.move_velocity(0);
-        }
-
-        if(master.get_digital(DIGITAL_UP)){
-          Puncher.tare_position();
-          while(Puncher.get_position() < 1850){
-            Puncher.move_velocity(200);
-          }
-          Puncher.move_velocity(0);
-
-          Intake.tare_position();
-          while(Intake.get_position() < 1000){
-            Intake.move_velocity(200);
-          }
-          Intake.move_velocity(0);
-        }
-
-        if(master.get_digital(DIGITAL_DOWN)){
-          Puncher.tare_position();
-          while(Puncher.get_position() < 1850){
-            Puncher.move_velocity(200);
-          }
-          Puncher.move_velocity(0);
-
-          Intake.tare_position();
-          while(Intake.get_position() < 1000){
-            Intake.move_velocity(200);
-          }
-          Intake.move_velocity(0);
-        }
-
-        else{
-          Puncher.move_velocity(0);
-        }
-
-  if(master.get_digital(DIGITAL_R1)){
-  Lift.move_velocity(200);
-  }
-
-  else if(master.get_digital(DIGITAL_R2)){
-  Lift.move_velocity(-200);
-  }
-
-  else{
-  Lift.move_velocity(0);
-  }
-
-  if(master.get_digital(DIGITAL_L1)){
-  Intake.move_velocity(-200);
-  }
-
-  else if(master.get_digital(DIGITAL_L2)){
-  Intake.move_velocity(200);
-  }
-  else{
-  Intake.move_velocity(0);
-  }
-
-  pros::delay(20);
+    if(master.get_digital(DIGITAL_RIGHT)){
+      PIDTurnDrive(250);
     }
+
+    if(master.get_digital(DIGITAL_LEFT)){
+      PIDTurnDrive(-250);
+    }
+
+    else{
+      Puncher.move_velocity(0);
+    }
+
+    pros::delay(20);
   }
 }

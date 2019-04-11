@@ -9,7 +9,7 @@ using namespace okapi;
 using namespace pros;
 void PIDTurn(double target){
   pros::Motor Intake(16);
-	pros::Motor Lift(5);
+  pros::Motor Lift(5);
   pros::ADIAnalogIn IntakeLine_Top1 (3);
   pros::ADIGyro gyro (4);
   pros::Motor LeftF(10);
@@ -17,7 +17,7 @@ void PIDTurn(double target){
   pros::Motor RightF(20, true);
   pros::Motor RightB(11, true);
 
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
+  pros::Controller master(pros::E_CONTROLLER_MASTER);
 
   double kP = 0.3;
   double kI = 0.00000003;
@@ -44,7 +44,7 @@ void PIDTurn(double target){
       I = 0;
     }
 
-    if(error<= 1 && error>= -1){
+    if(error<= 5 && error>= -5){
       break;
     }
   } while(!(error<= 5 && error>= -2));

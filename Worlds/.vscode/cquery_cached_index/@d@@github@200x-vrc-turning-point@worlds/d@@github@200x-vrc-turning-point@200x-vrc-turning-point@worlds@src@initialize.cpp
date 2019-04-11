@@ -1,16 +1,14 @@
 #include "main.h"
 #include "AutoVars.cpp"
 #include "functions.h"
+#include "motorDefs.h"
 #include "../include/display/lv_conf.h"
 #include "../include/display/lvgl.h"
 
 int AutoCount;
 
-
-
-
 void initialize() {
-	// Gui();
+	Gui();
 }
 
 /**
@@ -19,7 +17,7 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-  // Gui();
+  Gui();
 }
 
 /**
@@ -32,5 +30,5 @@ void disabled() {
  * starts.
  */
 void competition_initialize() {
-  // Gui();
+  Gui();
 }
