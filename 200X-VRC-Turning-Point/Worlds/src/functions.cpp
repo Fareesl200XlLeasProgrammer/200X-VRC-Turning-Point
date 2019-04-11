@@ -40,64 +40,65 @@ void anglePID(double target){
 
 }
 
-void puncherTask(void*){//function to reset puncher
-  int button = 0;
-
+void Shoot(void*){
   while(true){
-    if(master.get_digital(DIGITAL_X)){
-      button = 0;
-      while(AnglePot.get_value_calibrated() > 0){
-        Angler.move_velocity(-200);
-      }
-      Angler.move_velocity(0);
+    while(Puncher.get_position() < 1800){
+      Puncher.move_velocity(200);
     }
-    if(master.get_digital(DIGITAL_Y) && button == 3){
-      button = 2;
+    Puncher.move_velocity(0);
+    pros::delay(20);
+  }
+}
 
-      while(AnglePot.get_value_calibrated() > 100){
-        Angler.move_velocity(-200);
-      }
-      Angler.move_velocity(0);
-    }
-    else if(master.get_digital(DIGITAL_Y) && button < 3){
-      button = 2;
-      while(AnglePot.get_value_calibrated() < 100){//120
-        Angler.move_velocity(200);
-      }
-      Angler.move_velocity(0);
+void puncherTask(void*){//function to reset puncher
+  pros::Task shootTask(Shoot, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
+  while(true){
+
+    if(master.get_digital(DIGITAL_X)){
+      Angler.move_absolute(0, 200);
+      Puncher.tare_position();
     }
 
     if(master.get_digital(DIGITAL_A)){
-
-      button = 2;
-      while(Puncher.get_position() < 1850){
+      Angler.move_absolute(0, 200);
+      Puncher.tare_position();
+      while(Puncher.get_position() < 1800){
         pros::delay(1);
       }
+      Puncher.tare_position();
       while(AnglePot.get_value_calibrated() < 120){
         Angler.move_velocity(200);
       }
       Angler.move_velocity(0);
-
-      while(Puncher.get_position() < 1850){
+      while(Puncher.get_position() < 1800){
         pros::delay(1);
       }
-      while(AnglePot.get_value_calibrated() > 0){
-        Angler.move_velocity(-200);
+      Angler.move_absolute(0, 200);
+    }
+
+    if(master.get_digital(DIGITAL_Y)){
+      Puncher.tare_position();
+      while(AnglePot.get_value_calibrated() < 120){
+        Angler.move_velocity(200);
       }
       Angler.move_velocity(0);
+      while(Puncher.get_position() < 1800){pros::delay(1);}
+      Angler.move_absolute(0, 200);
+    }
+
+    if(master.get_digital(DIGITAL_A)){
+
 
   }
 
-    if(master.get_digital(DIGITAL_UP) && button < 1){
-      button = 1;
+    if(master.get_digital(DIGITAL_UP) ){
       while(AnglePot.get_value_calibrated() < 20){
         Angler.move_velocity(200);
       }
       Angler.move_velocity(0);
     }
 
-    if(master.get_digital(DIGITAL_UP) && button > 1){
-      button = 1;
+    if(master.get_digital(DIGITAL_UP)){
     while(AnglePot.get_value_calibrated() > 20){
       Angler.move_velocity(-200);
   }
@@ -106,15 +107,13 @@ void puncherTask(void*){//function to reset puncher
 
 
     if(master.get_digital(DIGITAL_DOWN)){
-      button = 3;
       while(AnglePot.get_value_calibrated() < 160){
         Angler.move_velocity(200);
       }
       Angler.move_velocity(0);
     }
-  }
-
     pros::delay(20);
+  }
 }
 
 
@@ -243,6 +242,17 @@ void Drive(void*){
 			RightF.move(master.get_analog(ANALOG_LEFT_Y) - master.get_analog(ANALOG_RIGHT_X) - master.get_analog(ANALOG_LEFT_X));
 			RightB.move(master.get_analog(ANALOG_LEFT_Y) - master.get_analog(ANALOG_RIGHT_X) + master.get_analog(ANALOG_LEFT_X));
 		}
+
+    if(master.get_digital(DIGITAL_L1)){
+    Intake.move_velocity(-200);
+    }
+
+    else if(master.get_digital(DIGITAL_L2)){
+    Intake.move_velocity(200);
+    }
+    else{
+    Intake.move_velocity(0);
+    }
 
     delay(20);
   }
