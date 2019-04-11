@@ -1,16 +1,16 @@
-#include "main.h"
+#include "../include/main.h"
 
 void opcontrol() {
 	//Motor Definitions
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
 
-	pros::Motor Right(1, false);
+	pros::Motor Right(11, false);
 
-	pros::Motor Right2(2, false);
+	pros::Motor Right2(13, false);
 
-	pros::Motor Left(3);
+	pros::Motor Left(14);
 
-	pros::Motor Left2(4);
+	pros::Motor Left2(12);
 
 	pros::Motor Flipper(20);
 
@@ -20,7 +20,7 @@ void opcontrol() {
 
 	pros::Motor Flywheel(10);
 
-	pros::Motor Index(17);
+	pros::Motor Index(18);
 
 	// Gui();//Run the gui
 
