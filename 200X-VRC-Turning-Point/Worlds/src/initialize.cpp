@@ -1,14 +1,16 @@
 #include "main.h"
 #include "AutoVars.cpp"
-#include "functions.h"
 #include "motorDefs.h"
+#include "functions.h"
 #include "../include/display/lv_conf.h"
 #include "../include/display/lvgl.h"
 
-int AutoCount;
+extern int AutoCount;
+extern const lv_img_t six_logo;
+extern const lv_img_t lance;
 
 void initialize() {
-	// Gui();
+  Gui();
 }
 
 /**

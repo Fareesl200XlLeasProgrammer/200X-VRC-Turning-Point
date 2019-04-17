@@ -139,10 +139,8 @@ void opcontrol() {
   Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
   Lift.set_brake_mode(MOTOR_BRAKE_HOLD);
 
-  Puncher.tare_position();
-  while(Puncher.get_position() < 900){
-    Puncher.move_velocity(200);
-  }
+  Puncher.move_velocity(200);
+  pros::delay(500);
   Puncher.move_velocity(0);
 
   pros::Task Drive_task(Drive, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
@@ -152,15 +150,12 @@ void opcontrol() {
   while(true){
     AnglePot.calibrate();
 
-    Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
-
-
     if(master.get_digital(DIGITAL_RIGHT)){
-      PIDTurnDrive(250);
+      PIDTurnDrive(150);
     }
 
     if(master.get_digital(DIGITAL_LEFT)){
-      PIDTurnDrive(-250);
+      PIDTurnDrive(-150);
     }
 
     else{

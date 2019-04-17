@@ -3,9 +3,11 @@
 #include "pros/rtos.h"
 #include "functions.h"
 #include "motorDefs.h"
+#include "AutoVars.cpp"
 
 using namespace pros;//just so i dont have to do pros:: before everything
 using namespace okapi;
+int AutoCount = 0;
 void anglePID(double target){
   // pros::Motor Angler(15);
   Angler.set_brake_mode(MOTOR_BRAKE_HOLD);
@@ -42,12 +44,13 @@ void anglePID(double target){
 
 void Shoot(void*){
   while(true){
-    if(master.get_digital(DIGITAL_A))
-    while(Puncher.get_position() < 1800){
-      Puncher.move_velocity(200);
+    if(master.get_digital(DIGITAL_A)){
+      Puncher.tare_position();
+      while(Puncher.get_position() < 1800){
+        Puncher.move_velocity(200);
+      }
+      Puncher.move_velocity(0);
     }
-    Puncher.move_velocity(0);
-    pros::delay(20);
 
     if(master.get_digital(DIGITAL_X)){
       Puncher.tare_position();
@@ -59,7 +62,7 @@ void Shoot(void*){
 
     if(master.get_digital(DIGITAL_Y)){
       Puncher.tare_position();
-      while(Puncher.get_position() < 1800){
+      while(Puncher.get_position() < 2000){
         Puncher.move_velocity(200);
       }
       Puncher.move_velocity(0);
@@ -74,16 +77,78 @@ void Shoot(void*){
     }
 
     if(master.get_digital(DIGITAL_DOWN)){
+      Puncher.tare_position();
       while(Puncher.get_position() < 1800){
         Puncher.move_velocity(200);
       }
       Puncher.move_velocity(0);
+    }
+
+    if(master.get_analog(ANALOG_RIGHT_Y) > 40){
+      Puncher.move_velocity(200);
+    }
+    else{
+      Puncher.move_velocity(0);
+    }
+  }
+}
+
+void IntakeRoll(void*){
+  while(true){
+    if(master.get_digital(DIGITAL_X)){
+      while(Puncher.get_position() < 1800){
+        pros::delay(1);
+      }
+
+      Intake.tare_position();
+      while(Intake.get_position() < 2000){
+        Intake.move_velocity(200);
+      }
+      Intake.move_velocity(0);
+
+    }
+
+    if(master.get_digital(DIGITAL_Y)){
+      while(Puncher.get_position() < 1800){
+        pros::delay(1);
+      }
+
+      Intake.tare_position();
+      while(Intake.get_position() < 2000){
+        Intake.move_velocity(200);
+      }
+      Intake.move_velocity(0);
+    }
+
+    if(master.get_digital(DIGITAL_UP)){
+      while(Puncher.get_position() < 1800){
+        pros::delay(1);
+      }
+
+      Intake.tare_position();
+      while(Intake.get_position() < 2000){
+        Intake.move_velocity(200);
+      }
+      Intake.move_velocity(0);
+    }
+
+    if(master.get_digital(DIGITAL_DOWN)){
+      while(Puncher.get_position() < 1800){
+        pros::delay(1);
+      }
+
+      Intake.tare_position();
+      while(Intake.get_position() < 2000){
+        Intake.move_velocity(200);
+      }
+      Intake.move_velocity(0);
     }
   }
 }
 
 void puncherTask(void*){//function to reset puncher
   pros::Task shootTask(Shoot, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
+
   while(true){
     if(master.get_digital(DIGITAL_A)){
       Angler.move_absolute(0, 200);
@@ -103,7 +168,7 @@ void puncherTask(void*){//function to reset puncher
     }
 
     if(master.get_digital(DIGITAL_Y)){
-      while(AnglePot.get_value_calibrated() < 100){
+      while(AnglePot.get_value_calibrated() < 110){
         Angler.move_velocity(200);
       }
       Angler.move_velocity(0);
@@ -129,7 +194,7 @@ void puncherTask(void*){//function to reset puncher
       {
         pros::delay(1);
       }
-      // Angler.move_absolute(0, 200);
+      Angler.move_absolute(0, 200);
     }
     pros::delay(20);
   }
@@ -138,6 +203,7 @@ void puncherTask(void*){//function to reset puncher
 
 extern const lv_img_t six_logo;
 extern const lv_img_t lance;
+extern int AutoCount;
 
 static lv_res_t btn_click_action(lv_obj_t * btn1){
   uint8_t id = lv_obj_get_free_num(btn1);
@@ -171,7 +237,7 @@ static lv_res_t btn_click_action(lv_obj_t * btn1){
   return LV_RES_OK; /*Return OK if the button is not deleted*/
 }
 
-void Gui(void*){
+void Gui(){
   lv_theme_t * th = lv_theme_alien_init(100, NULL);
 
   lv_obj_t *tabview;
