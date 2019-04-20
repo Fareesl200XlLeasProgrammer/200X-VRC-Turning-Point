@@ -2,10 +2,6 @@
 #include "okapi/api.hpp"
 #include "AutoVars.cpp"
 
-void redBack_4Flag();
+void blueFront_3flag();
 
-void redFront_6flag();
-
-void redFront_descore();
-
-void redFront_full();
+void redFront_3flag();
