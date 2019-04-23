@@ -48,51 +48,6 @@ void PIDTurnDrive(double target){
   RightB.move_velocity(0);
 }
 
-// void PIDDrive(double target){
-//   double kP = 0.3;
-//   double kI = 0.000003;
-//   double kD = 1.35;
-//   double errorL, totalErrorL, lastErrorL, errorR, totalErrorR, lastErrorR,pwrL,pwrR,CurrentL, CurrentR;
-//
-//   do{
-//     CurrentL = LeftF.get_position();
-//     CurrentR = RightF.get_position();
-//     errorL = target - CurrentL;
-//     errorR = target - CurrentR;
-//     totalErrorL += errorL;
-//     totalErrorR += errorR;
-//     lastErrorL = errorL;
-//     lastErrorR = errorR;
-//
-//     double Pl, Il, Dl, Pr, Ir, Dr;
-//     Pl = errorL*kP;
-//
-//     Il = kI * totalErrorL;
-//
-//     Dl = kD * (errorL - lastErrorL);
-//
-//     Pr = errorR*kP;
-//
-//     Ir = kI * totalErrorR;
-//
-//     Dr = kD * (errorR - lastErrorR);
-//
-//     pwrL = Pl + Il + Dl;
-//     pwrR = Pr + Ir + Dr;
-//
-//     LeftF.move_velocity(pwrL);
-//     LeftB.move_velocity(pwrL);
-//
-//     RightF.move_velocity(pwrR);
-//     RightB.move_velocity(pwrR);
-//   }while(!(errorL<= 5 && errorL>= -5 && errorR<= 5 && errorR>= -5));
-//   LeftF.move_velocity(0);
-//   LeftB.move_velocity(0);
-//
-//   RightF.move_velocity(0);
-//   RightB.move_velocity(0);
-// }
-
 
 // void anglePID(double target){
 //   // pros::Motor Angler(15);
@@ -140,7 +95,7 @@ void opcontrol() {
   Lift.set_brake_mode(MOTOR_BRAKE_HOLD);
 
   Puncher.move_velocity(200);
-  pros::delay(500);
+  pros::delay(800);
   Puncher.move_velocity(0);
 
   pros::Task Drive_task(Drive, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");

@@ -46,7 +46,7 @@ void Shoot(void*){
   while(true){
     if(master.get_digital(DIGITAL_A)){
       Puncher.tare_position();
-      while(Puncher.get_position() < 1800){
+      while(Puncher.get_position() < 2000){
         Puncher.move_velocity(200);
       }
       Puncher.move_velocity(0);
@@ -54,7 +54,7 @@ void Shoot(void*){
 
     if(master.get_digital(DIGITAL_X)){
       Puncher.tare_position();
-      while(Puncher.get_position() < 1800){
+      while(Puncher.get_position() < 2000){
         Puncher.move_velocity(200);
       }
       Puncher.move_velocity(0);
@@ -70,7 +70,7 @@ void Shoot(void*){
 
     if(master.get_digital(DIGITAL_UP)){
       Puncher.tare_position();
-      while(Puncher.get_position() < 1800){
+      while(Puncher.get_position() < 2000){
         Puncher.move_velocity(200);
       }
       Puncher.move_velocity(0);
@@ -78,7 +78,7 @@ void Shoot(void*){
 
     if(master.get_digital(DIGITAL_DOWN)){
       Puncher.tare_position();
-      while(Puncher.get_position() < 1800){
+      while(Puncher.get_position() < 2000){
         Puncher.move_velocity(200);
       }
       Puncher.move_velocity(0);
@@ -151,46 +151,35 @@ void puncherTask(void*){//function to reset puncher
 
   while(true){
     if(master.get_digital(DIGITAL_A)){
-      Angler.move_absolute(0, 200);
-
       while(Puncher.get_position() < 1800){
         pros::delay(1);
       }
       Puncher.tare_position();
-      while(AnglePot.get_value_calibrated() < 120){
-        Angler.move_velocity(200);
-      }
-      Angler.move_velocity(0);
+      Angler.move_absolute(400, 200);
 
       Puncher.tare_position();
-      while(Puncher.get_position() < 1800){pros::delay(1);}
+      while(Puncher.get_position() < 2000){pros::delay(1);}
       Angler.move_absolute(0, 200);
     }
 
     if(master.get_digital(DIGITAL_Y)){
-      while(AnglePot.get_value_calibrated() < 110){
-        Angler.move_velocity(200);
-      }
+      Angler.move_absolute(400, 200);
+      pros::delay(300);
       Angler.move_velocity(0);
-      while(Puncher.get_position() < 1800){pros::delay(1);}
+      while(Puncher.get_position() < 2000){pros::delay(1);}
       Angler.move_absolute(0, 200);
     }
 
     if(master.get_digital(DIGITAL_UP) ){
-      while(AnglePot.get_value_calibrated() < 15){
-        Angler.move_velocity(200);
-      }
-      Angler.move_velocity(0);
-      while(Puncher.get_position() < 1800){pros::delay(1);}
+      while(AnglePot.get_value_calibrated() < 15){Angler.move_velocity(200);}Angler.move_velocity(0);
+      pros::delay(200);
+      while(Puncher.get_position() < 2000){pros::delay(1);}
       Angler.move_absolute(0, 200);
     }
 
     if(master.get_digital(DIGITAL_DOWN)){
-      while(AnglePot.get_value_calibrated() < 160){
-        Angler.move_velocity(200);
-      }
-      Angler.move_velocity(0);
-      while(Puncher.get_position() < 1800)
+      Angler.move_absolute(400, 200);
+      while(Puncher.get_position() < 2000)
       {
         pros::delay(1);
       }
@@ -308,13 +297,7 @@ void Gui(){
 
 }
 
-void Drive(void*){
-  RightF.set_brake_mode(MOTOR_BRAKE_HOLD);
-  RightB.set_brake_mode(MOTOR_BRAKE_HOLD);
-  LeftF.set_brake_mode(MOTOR_BRAKE_HOLD);
-  LeftB.set_brake_mode(MOTOR_BRAKE_HOLD);
-  Puncher.set_encoder_units(MOTOR_ENCODER_COUNTS);
-
+void liftTask(void*){
   while(true){
     if(master.get_digital(DIGITAL_R1)){
       Lift.move_velocity(200);
@@ -327,6 +310,19 @@ void Drive(void*){
     else{
       Lift.move_velocity(0);
     }
+    pros::delay(20);
+  }
+}
+
+void Drive(void*){
+  pros::Task lftTask(liftTask, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "");
+  RightF.set_brake_mode(MOTOR_BRAKE_HOLD);
+  RightB.set_brake_mode(MOTOR_BRAKE_HOLD);
+  LeftF.set_brake_mode(MOTOR_BRAKE_HOLD);
+  LeftB.set_brake_mode(MOTOR_BRAKE_HOLD);
+  Puncher.set_encoder_units(MOTOR_ENCODER_COUNTS);
+
+  while(true){
 
     if(master.get_analog(ANALOG_LEFT_Y) == 0 && master.get_analog(ANALOG_LEFT_X) == 0 && master.get_analog(ANALOG_RIGHT_X) == 0){
       LeftF.move_velocity(0);

@@ -16,3 +16,4 @@ void punchReset();
 void anglePID(double target);
 void IntakeRoll(void*);
 void Shoot(void*);
+void liftTask(void*);
