@@ -131,6 +131,7 @@ class Pipe:
 
     def collide(self, bird):
         bird_mask = bird.get_mask()
+
         top_mask = pygame.mask.from_surface(self.PIPE_TOP)
         bottom_mask = pygame.mask.from_surface(self.PIPE_BOTTOM)
 
